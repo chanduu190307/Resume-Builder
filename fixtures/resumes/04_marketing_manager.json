@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "meta": { "title": "Marketing Manager", "template": "classic", "page_size": "A4" },
+  "contact": {
+    "full_name": "Sofía Martínez",
+    "headline": "Digital Marketing Manager",
+    "email": "sofia.martinez@example.com",
+    "phone": "+34 600 000 111",
+    "location": "Madrid, Spain",
+    "links": [ { "kind": "linkedin", "url": "https://linkedin.com/in/sofia-martinez-example" } ]
+  },
+  "sections": [
+    {
+      "type": "summary",
+      "title": "Professional Summary",
+      "items": [
+        {
+          "kind": "summary",
+          "text": "Digital marketing manager with 7 years of experience in B2C e-commerce. Specialised in paid social, SEO and lifecycle email campaigns, managing annual budgets of up to EUR 1.2M."
+        }
+      ]
+    },
+    {
+      "type": "experience",
+      "title": "Professional Experience",
+      "items": [
+        {
+          "title": "Digital Marketing Manager",
+          "organization": "Adventure Works Retail",
+          "location": "Madrid, Spain",
+          "employment_type": "full_time",
+          "start": { "year": 2022, "month": 1 },
+          "current": true,
+          "bullets": [
+            { "text": "Manage a team of 3 specialists and an annual paid-media budget of EUR 1.2M." },
+            { "text": "Increased organic search traffic by 65% year over year through a content and technical SEO programme." },
+            { "text": "Launched lifecycle email journeys that grew repeat-purchase revenue by 22%." }
+          ]
+        },
+        {
+          "title": "Marketing Specialist",
+          "organization": "Wide World Importers",
+          "location": "Barcelona, Spain",
+          "employment_type": "full_time",
+          "start": { "year": 2018, "month": 4 },
+          "end": { "year": 2021, "month": 12 },
+          "bullets": [
+            { "text": "Ran paid social campaigns on Meta and TikTok for 40+ product launches." },
+            { "text": "Responsible for social media." },
+            { "text": "Coordinated with design agencies on campaign creative." }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "skills",
+      "title": "Core Skills",
+      "items": [
+        { "kind": "domain", "skills": ["SEO", "Paid social", "Email marketing", "Marketing analytics", "A/B testing"] },
+        { "name": "Tools", "kind": "tool", "skills": ["Google Analytics 4", "HubSpot", "Meta Ads Manager", "Semrush"] }
+      ]
+    },
+    {
+      "type": "education",
+      "title": "Education",
+      "items": [
+        {
+          "institution": "Universidad de Ejemplo",
+          "degree": "Grado en Marketing",
+          "location": "Madrid",
+          "start": { "year": 2013 },
+          "end": { "year": 2017 }
+        }
+      ]
+    },
+    {
+      "type": "languages",
+      "title": "Languages",
+      "items": [
+        { "language": "Spanish", "proficiency": "Native" },
+        { "language": "English", "proficiency": "Fluent (C1)" },
+        { "language": "French", "proficiency": "Intermediate" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+Ananya Rao
+Computer Science Undergraduate
+ananya.rao@example.com | +91 90000 00001 | Bengaluru, Karnataka | linkedin.com/in/ananya-rao-example
+| github.com/ananya-rao-example
+CAREER OBJECTIVE
+Final-year Computer Science student seeking a software developer role where I can apply my experience in full-stack
+web development and data structures.
+EDUCATION
+Bachelor of Engineering, Computer Science and Engineering Aug 2022 – Jun 2026
+Example Institute of Technology Bengaluru
+CGPA 8.6/10
+• Relevant coursework: Data Structures, Operating Systems, DBMS, Computer Networks
+Pre-University Certificate (PCMC) 2020 – 2022
+Sample PU College Mysuru
+92%
+INTERNSHIPS
+Web Development Intern Jun 2025 – Aug 2025
+Northwind Labs · Internship Remote
+• Built a React dashboard for tracking support tickets used by the internal support team.
+• Wrote REST API endpoints in Node.js and Express with input validation and unit tests.
+• Fixed 15 reported UI bugs during the internship.
+Technologies: React, Node.js, PostgreSQL
+PROJECTS
+Campus Lost & Found Jan 2025 – Apr 2025
+Team lead github.com/ananya-rao-example/lost-found
+• Led a team of 4 to build a mobile app for reporting and claiming lost items on campus.
+• Implemented image upload and push notifications with Firebase.
+Technologies: Flutter, Firebase
+Pathfinding Visualizer
+• Visualized Dijkstra's and A* algorithms on an interactive grid.
+Technologies: JavaScript, HTML, CSS
+TECHNICAL SKILLS
+Languages: Java, Python, JavaScript, C++, SQL
+Frameworks: React, Node.js, Express, Flutter
+Tools: Git, Firebase, PostgreSQL, VS Code
+CERTIFICATIONS
+Cloud Practitioner Foundations Nov 2024
+Example Cloud Academy
+EXTRACURRICULAR ACTIVITIES
+Coding Club 2023 - 2025
+Event Coordinator
+• Organized two inter-college hackathons with over 200 participants each.

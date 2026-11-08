@@ -1,0 +1,26 @@
+# Python
+engine/.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Node
+web/node_modules/
+web/dist/
+web/e2e/.results/
+web/test-results/
+web/playwright-report/
+web/.shots/
+docs/guide-screens/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

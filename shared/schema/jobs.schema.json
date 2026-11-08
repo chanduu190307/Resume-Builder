@@ -1,0 +1,1037 @@
+{
+  "$defs": {
+    "Category": {
+      "properties": {
+        "criteria": {
+          "items": {
+            "$ref": "#/$defs/Criterion"
+          },
+          "title": "Criteria",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "max_score": {
+          "title": "Max Score",
+          "type": "number"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "score",
+        "max_score",
+        "criteria"
+      ],
+      "title": "Category",
+      "type": "object"
+    },
+    "CoverLetter": {
+      "properties": {
+        "method": {
+          "description": "draft (assembled from your resume) or ai (polished, guard-checked)",
+          "title": "Method",
+          "type": "string"
+        },
+        "rejected_reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Rejected Reasons",
+          "type": "array"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "method",
+        "rejected_reasons"
+      ],
+      "title": "CoverLetter",
+      "type": "object"
+    },
+    "Criterion": {
+      "properties": {
+        "explanation": {
+          "description": "Why this score: what was measured and what was found.",
+          "title": "Explanation",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "max_points": {
+          "title": "Max Points",
+          "type": "number"
+        },
+        "points": {
+          "title": "Points",
+          "type": "number"
+        },
+        "refs": {
+          "items": {
+            "$ref": "#/$defs/Ref"
+          },
+          "title": "Refs",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "good",
+            "fair",
+            "poor",
+            "not_measured"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "tips": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Tips",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "points",
+        "max_points",
+        "status",
+        "explanation",
+        "tips",
+        "refs"
+      ],
+      "title": "Criterion",
+      "type": "object"
+    },
+    "EditOp": {
+      "properties": {
+        "bullet_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bullet Id"
+        },
+        "item_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Item Id"
+        },
+        "new": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "New"
+        },
+        "old": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Old"
+        },
+        "op": {
+          "enum": [
+            "replace_skill",
+            "add_skill",
+            "reorder_skills",
+            "reorder_bullets",
+            "set_bullet_text",
+            "set_summary_text",
+            "remove_bullet",
+            "set_skills"
+          ],
+          "title": "Op",
+          "type": "string"
+        },
+        "order": {
+          "description": "Skills (reorder_skills) or bullet ids (reorder_bullets).",
+          "items": {
+            "type": "string"
+          },
+          "title": "Order",
+          "type": "array"
+        },
+        "origin": {
+          "default": "user",
+          "enum": [
+            "user",
+            "ai_assisted"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "section_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section Id"
+        }
+      },
+      "required": [
+        "op",
+        "section_id",
+        "item_id",
+        "bullet_id",
+        "old",
+        "new",
+        "order",
+        "origin"
+      ],
+      "title": "EditOp",
+      "type": "object"
+    },
+    "Evidence": {
+      "properties": {
+        "ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Ref"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "where": {
+          "enum": [
+            "experience",
+            "projects",
+            "skills",
+            "summary",
+            "education",
+            "certifications",
+            "title",
+            "other"
+          ],
+          "title": "Where",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "where",
+        "ref"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "FetchedJobOut": {
+      "properties": {
+        "company": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Company"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Title"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url",
+        "text",
+        "title",
+        "company",
+        "source"
+      ],
+      "title": "FetchedJobOut",
+      "type": "object"
+    },
+    "JobAnalysis": {
+      "properties": {
+        "company": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Company"
+        },
+        "education_alternative": {
+          "default": false,
+          "description": "'or equivalent experience' accepted",
+          "title": "Education Alternative",
+          "type": "boolean"
+        },
+        "education_level": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "1 school, 2 associate, 3 bachelor, 4 master, 5 doctorate",
+          "title": "Education Level"
+        },
+        "education_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Education Text"
+        },
+        "keywords": {
+          "items": {
+            "$ref": "#/$defs/JobKeyword"
+          },
+          "title": "Keywords",
+          "type": "array"
+        },
+        "method": {
+          "default": "rules",
+          "enum": [
+            "rules",
+            "llm"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "requirements": {
+          "items": {
+            "$ref": "#/$defs/JobRequirement"
+          },
+          "title": "Requirements",
+          "type": "array"
+        },
+        "text": {
+          "default": "",
+          "title": "Text",
+          "type": "string"
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Title"
+        },
+        "years_required": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Years Required"
+        }
+      },
+      "required": [
+        "title",
+        "company",
+        "requirements",
+        "keywords",
+        "years_required",
+        "education_level",
+        "education_text",
+        "education_alternative",
+        "method",
+        "text"
+      ],
+      "title": "JobAnalysis",
+      "type": "object"
+    },
+    "JobKeyword": {
+      "properties": {
+        "count": {
+          "title": "Count",
+          "type": "integer"
+        },
+        "importance": {
+          "enum": [
+            "required",
+            "preferred",
+            "mentioned"
+          ],
+          "title": "Importance",
+          "type": "string"
+        },
+        "skill": {
+          "title": "Skill",
+          "type": "string"
+        },
+        "term": {
+          "description": "How the job description writes it, e.g. 'React.js'.",
+          "title": "Term",
+          "type": "string"
+        },
+        "weight": {
+          "title": "Weight",
+          "type": "number"
+        }
+      },
+      "required": [
+        "skill",
+        "term",
+        "importance",
+        "count",
+        "weight"
+      ],
+      "title": "JobKeyword",
+      "type": "object"
+    },
+    "JobRequirement": {
+      "properties": {
+        "category": {
+          "enum": [
+            "skill",
+            "experience",
+            "education",
+            "certification",
+            "other"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "required",
+            "preferred",
+            "responsibility"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "skills": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Skills",
+          "type": "array"
+        },
+        "text": {
+          "description": "Verbatim from the job description.",
+          "title": "Text",
+          "type": "string"
+        },
+        "years": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Years"
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "kind",
+        "category",
+        "skills",
+        "years"
+      ],
+      "title": "JobRequirement",
+      "type": "object"
+    },
+    "KeywordMatch": {
+      "properties": {
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        },
+        "importance": {
+          "enum": [
+            "required",
+            "preferred",
+            "mentioned"
+          ],
+          "title": "Importance",
+          "type": "string"
+        },
+        "resume_terms": {
+          "description": "How your resume writes it.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Resume Terms",
+          "type": "array"
+        },
+        "skill": {
+          "title": "Skill",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "present",
+            "equivalent",
+            "weak",
+            "supported",
+            "missing"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "supported_by": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Supported By",
+          "type": "array"
+        },
+        "term": {
+          "description": "The job's wording.",
+          "title": "Term",
+          "type": "string"
+        }
+      },
+      "required": [
+        "skill",
+        "term",
+        "importance",
+        "status",
+        "resume_terms",
+        "supported_by",
+        "evidence",
+        "explanation"
+      ],
+      "title": "KeywordMatch",
+      "type": "object"
+    },
+    "MatchResult": {
+      "properties": {
+        "keywords": {
+          "items": {
+            "$ref": "#/$defs/KeywordMatch"
+          },
+          "title": "Keywords",
+          "type": "array"
+        },
+        "requirements": {
+          "items": {
+            "$ref": "#/$defs/RequirementMatch"
+          },
+          "title": "Requirements",
+          "type": "array"
+        },
+        "score": {
+          "$ref": "#/$defs/Score"
+        }
+      },
+      "required": [
+        "score",
+        "keywords",
+        "requirements"
+      ],
+      "title": "MatchResult",
+      "type": "object"
+    },
+    "Ref": {
+      "description": "Where in the resume an issue is, so the UI can jump to it.",
+      "properties": {
+        "bullet_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bullet Id"
+        },
+        "field": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Field"
+        },
+        "item_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Item Id"
+        },
+        "section_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section Id"
+        }
+      },
+      "required": [
+        "section_id",
+        "item_id",
+        "bullet_id",
+        "field"
+      ],
+      "title": "Ref",
+      "type": "object"
+    },
+    "Rejected": {
+      "properties": {
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "reasons"
+      ],
+      "title": "Rejected",
+      "type": "object"
+    },
+    "RequirementMatch": {
+      "properties": {
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "required",
+            "preferred",
+            "responsibility"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "requirement_id": {
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "met",
+            "partial",
+            "not_met",
+            "not_found"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requirement_id",
+        "text",
+        "kind",
+        "category",
+        "status",
+        "explanation",
+        "evidence"
+      ],
+      "title": "RequirementMatch",
+      "type": "object"
+    },
+    "RewriteResult": {
+      "properties": {
+        "rejected": {
+          "items": {
+            "$ref": "#/$defs/Rejected"
+          },
+          "title": "Rejected",
+          "type": "array"
+        },
+        "suggestions": {
+          "items": {
+            "$ref": "#/$defs/Suggestion"
+          },
+          "title": "Suggestions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "suggestions",
+        "rejected"
+      ],
+      "title": "RewriteResult",
+      "type": "object"
+    },
+    "Score": {
+      "properties": {
+        "band": {
+          "enum": [
+            "Excellent",
+            "Good",
+            "Fair",
+            "Needs work"
+          ],
+          "title": "Band",
+          "type": "string"
+        },
+        "categories": {
+          "items": {
+            "$ref": "#/$defs/Category"
+          },
+          "title": "Categories",
+          "type": "array"
+        },
+        "measured": {
+          "default": true,
+          "title": "Measured",
+          "type": "boolean"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        },
+        "total": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Total",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "total",
+        "band",
+        "summary",
+        "categories",
+        "measured"
+      ],
+      "title": "Score",
+      "type": "object"
+    },
+    "Suggestion": {
+      "properties": {
+        "after": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "After"
+        },
+        "before": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Before"
+        },
+        "confirmation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Question the user must answer yes to before applying.",
+          "title": "Confirmation"
+        },
+        "editable": {
+          "default": false,
+          "title": "Editable",
+          "type": "boolean"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "id": {
+          "description": "Stable across re-analysis, so rejected suggestions stay rejected.",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "use_job_wording",
+            "add_evidenced_skill",
+            "confirm_supported_skill",
+            "reorder_skills",
+            "reorder_bullets",
+            "rewrite_bullet",
+            "rewrite_summary",
+            "add_metric",
+            "summary_tip",
+            "gap",
+            "remove_duplicate",
+            "remove_first_person",
+            "fix_tense",
+            "rewrite_weak",
+            "dedupe_skills",
+            "tip"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "needs_confirmation": {
+          "default": false,
+          "title": "Needs Confirmation",
+          "type": "boolean"
+        },
+        "ops": {
+          "items": {
+            "$ref": "#/$defs/EditOp"
+          },
+          "title": "Ops",
+          "type": "array"
+        },
+        "priority": {
+          "default": 2,
+          "description": "1 high, 2 medium, 3 low",
+          "title": "Priority",
+          "type": "integer"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Ref"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "skill": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Skill"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "title",
+        "reason",
+        "evidence",
+        "needs_confirmation",
+        "confirmation",
+        "before",
+        "after",
+        "editable",
+        "ops",
+        "ref",
+        "priority",
+        "skill"
+      ],
+      "title": "Suggestion",
+      "type": "object"
+    },
+    "TailorResponse": {
+      "properties": {
+        "match": {
+          "$ref": "#/$defs/MatchResult"
+        },
+        "suggestions": {
+          "items": {
+            "$ref": "#/$defs/Suggestion"
+          },
+          "title": "Suggestions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "match",
+        "suggestions"
+      ],
+      "title": "TailorResponse",
+      "type": "object"
+    }
+  },
+  "description": "Not an endpoint: bundles every jobs type so one TypeScript file can be generated.",
+  "properties": {
+    "analysis": {
+      "$ref": "#/$defs/JobAnalysis"
+    },
+    "cover_letter": {
+      "$ref": "#/$defs/CoverLetter"
+    },
+    "fetched": {
+      "$ref": "#/$defs/FetchedJobOut"
+    },
+    "rewrite": {
+      "$ref": "#/$defs/RewriteResult"
+    },
+    "tailor": {
+      "$ref": "#/$defs/TailorResponse"
+    }
+  },
+  "required": [
+    "analysis",
+    "tailor",
+    "rewrite",
+    "fetched",
+    "cover_letter"
+  ],
+  "title": "JobsContract",
+  "type": "object"
+}

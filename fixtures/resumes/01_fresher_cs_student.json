@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0",
+  "meta": { "title": "Fresher - Software Developer", "template": "classic", "page_size": "A4" },
+  "contact": {
+    "full_name": "Ananya Rao",
+    "headline": "Computer Science Undergraduate",
+    "email": "ananya.rao@example.com",
+    "phone": "+91 90000 00001",
+    "location": "Bengaluru, Karnataka",
+    "links": [
+      { "kind": "linkedin", "url": "https://www.linkedin.com/in/ananya-rao-example" },
+      { "kind": "github", "url": "https://github.com/ananya-rao-example" }
+    ]
+  },
+  "sections": [
+    {
+      "type": "summary",
+      "title": "Career Objective",
+      "items": [
+        {
+          "kind": "objective",
+          "text": "Final-year Computer Science student seeking a software developer role where I can apply my experience in full-stack web development and data structures."
+        }
+      ]
+    },
+    {
+      "type": "education",
+      "title": "Education",
+      "items": [
+        {
+          "institution": "Example Institute of Technology",
+          "degree": "Bachelor of Engineering",
+          "field_of_study": "Computer Science and Engineering",
+          "location": "Bengaluru",
+          "start": { "year": 2022, "month": 8 },
+          "end": { "year": 2026, "month": 6 },
+          "grade": "CGPA 8.6/10",
+          "bullets": [
+            { "text": "Relevant coursework: Data Structures, Operating Systems, DBMS, Computer Networks" }
+          ]
+        },
+        {
+          "institution": "Sample PU College",
+          "degree": "Pre-University Certificate (PCMC)",
+          "location": "Mysuru",
+          "start": { "year": 2020 },
+          "end": { "year": 2022 },
+          "grade": "92%"
+        }
+      ]
+    },
+    {
+      "type": "experience",
+      "title": "Internships",
+      "items": [
+        {
+          "title": "Web Development Intern",
+          "organization": "Northwind Labs",
+          "location": "Remote",
+          "employment_type": "internship",
+          "start": { "year": 2025, "month": 6 },
+          "end": { "year": 2025, "month": 8 },
+          "technologies": ["React", "Node.js", "PostgreSQL"],
+          "bullets": [
+            { "text": "Built a React dashboard for tracking support tickets used by the internal support team." },
+            { "text": "Wrote REST API endpoints in Node.js and Express with input validation and unit tests." },
+            { "text": "Fixed 15 reported UI bugs during the internship." }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "projects",
+      "title": "Projects",
+      "items": [
+        {
+          "name": "Campus Lost & Found",
+          "role": "Team lead",
+          "url": "https://github.com/ananya-rao-example/lost-found",
+          "start": { "year": 2025, "month": 1 },
+          "end": { "year": 2025, "month": 4 },
+          "technologies": ["Flutter", "Firebase"],
+          "bullets": [
+            { "text": "Led a team of 4 to build a mobile app for reporting and claiming lost items on campus." },
+            { "text": "Implemented image upload and push notifications with Firebase." }
+          ]
+        },
+        {
+          "name": "Pathfinding Visualizer",
+          "technologies": ["JavaScript", "HTML", "CSS"],
+          "bullets": [
+            { "text": "Visualized Dijkstra's and A* algorithms on an interactive grid." }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "skills",
+      "title": "Technical Skills",
+      "items": [
+        { "name": "Languages", "kind": "technical", "skills": ["Java", "Python", "JavaScript", "C++", "SQL"] },
+        { "name": "Frameworks", "kind": "technical", "skills": ["React", "Node.js", "Express", "Flutter"] },
+        { "name": "Tools", "kind": "tool", "skills": ["Git", "Firebase", "PostgreSQL", "VS Code"] }
+      ]
+    },
+    {
+      "type": "certifications",
+      "title": "Certifications",
+      "items": [
+        { "name": "Cloud Practitioner Foundations", "issuer": "Example Cloud Academy", "issued": { "year": 2024, "month": 11 } }
+      ]
+    },
+    {
+      "type": "custom",
+      "title": "Extracurricular Activities",
+      "items": [
+        {
+          "title": "Coding Club",
+          "subtitle": "Event Coordinator",
+          "date_text": "2023 - 2025",
+          "bullets": [ { "text": "Organized two inter-college hackathons with over 200 participants each." } ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,358 @@
+{
+  "$defs": {
+    "Category": {
+      "properties": {
+        "criteria": {
+          "items": {
+            "$ref": "#/$defs/Criterion"
+          },
+          "title": "Criteria",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "max_score": {
+          "title": "Max Score",
+          "type": "number"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "score",
+        "max_score",
+        "criteria"
+      ],
+      "title": "Category",
+      "type": "object"
+    },
+    "Criterion": {
+      "properties": {
+        "explanation": {
+          "description": "Why this score: what was measured and what was found.",
+          "title": "Explanation",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "max_points": {
+          "title": "Max Points",
+          "type": "number"
+        },
+        "points": {
+          "title": "Points",
+          "type": "number"
+        },
+        "refs": {
+          "items": {
+            "$ref": "#/$defs/Ref"
+          },
+          "title": "Refs",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "good",
+            "fair",
+            "poor",
+            "not_measured"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "tips": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Tips",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "points",
+        "max_points",
+        "status",
+        "explanation",
+        "tips",
+        "refs"
+      ],
+      "title": "Criterion",
+      "type": "object"
+    },
+    "Issue": {
+      "properties": {
+        "affects_score": {
+          "default": true,
+          "title": "Affects Score",
+          "type": "boolean"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Ref"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning",
+            "info"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "suggestion": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Suggestion"
+        }
+      },
+      "required": [
+        "id",
+        "severity",
+        "category",
+        "message",
+        "suggestion",
+        "ref",
+        "affects_score"
+      ],
+      "title": "Issue",
+      "type": "object"
+    },
+    "Ref": {
+      "description": "Where in the resume an issue is, so the UI can jump to it.",
+      "properties": {
+        "bullet_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bullet Id"
+        },
+        "field": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Field"
+        },
+        "item_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Item Id"
+        },
+        "section_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section Id"
+        }
+      },
+      "required": [
+        "section_id",
+        "item_id",
+        "bullet_id",
+        "field"
+      ],
+      "title": "Ref",
+      "type": "object"
+    },
+    "Score": {
+      "properties": {
+        "band": {
+          "enum": [
+            "Excellent",
+            "Good",
+            "Fair",
+            "Needs work"
+          ],
+          "title": "Band",
+          "type": "string"
+        },
+        "categories": {
+          "items": {
+            "$ref": "#/$defs/Category"
+          },
+          "title": "Categories",
+          "type": "array"
+        },
+        "measured": {
+          "default": true,
+          "title": "Measured",
+          "type": "boolean"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        },
+        "total": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Total",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "total",
+        "band",
+        "summary",
+        "categories",
+        "measured"
+      ],
+      "title": "Score",
+      "type": "object"
+    },
+    "Stats": {
+      "properties": {
+        "bullets": {
+          "title": "Bullets",
+          "type": "integer"
+        },
+        "experience_months": {
+          "title": "Experience Months",
+          "type": "integer"
+        },
+        "quantified_bullets": {
+          "title": "Quantified Bullets",
+          "type": "integer"
+        },
+        "roles": {
+          "title": "Roles",
+          "type": "integer"
+        },
+        "words": {
+          "title": "Words",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "words",
+        "bullets",
+        "quantified_bullets",
+        "experience_months",
+        "roles"
+      ],
+      "title": "Stats",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "ats_text": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Plain text read back from the exported PDF.",
+      "title": "Ats Text"
+    },
+    "career_level": {
+      "enum": [
+        "early",
+        "experienced"
+      ],
+      "title": "Career Level",
+      "type": "string"
+    },
+    "career_level_reason": {
+      "title": "Career Level Reason",
+      "type": "string"
+    },
+    "issues": {
+      "items": {
+        "$ref": "#/$defs/Issue"
+      },
+      "title": "Issues",
+      "type": "array"
+    },
+    "parsing": {
+      "$ref": "#/$defs/Score"
+    },
+    "quality": {
+      "$ref": "#/$defs/Score"
+    },
+    "stats": {
+      "$ref": "#/$defs/Stats"
+    }
+  },
+  "required": [
+    "career_level",
+    "career_level_reason",
+    "quality",
+    "parsing",
+    "issues",
+    "stats",
+    "ats_text"
+  ],
+  "title": "AnalysisResult",
+  "type": "object"
+}

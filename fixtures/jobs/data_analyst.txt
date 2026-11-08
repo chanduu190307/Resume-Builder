@@ -1,0 +1,23 @@
+Junior Data Analyst
+
+Brightwater Health Trust is looking for a Junior Data Analyst to join our analytics team in Manchester.
+
+Responsibilities:
+• Build and maintain dashboards in Power BI for operational teams.
+• Clean, model and analyse data from multiple sources using SQL.
+• Present findings to non-technical stakeholders.
+• Support ad-hoc analysis requests from clinical leads.
+
+Essential criteria:
+• Strong SQL skills.
+• Experience with Excel, including pivot tables.
+• Excellent communication skills and the ability to explain data to non-specialists.
+• A degree in a numerate subject (mathematics, statistics, economics or similar).
+
+Desirable criteria:
+• Experience with Python and pandas.
+• Knowledge of statistics and A/B testing.
+• Experience with Tableau.
+
+What we offer
+Pension scheme, 27 days annual leave, hybrid working.

@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0",
+  "meta": { "title": "Senior Backend Engineer", "template": "classic", "page_size": "Letter" },
+  "contact": {
+    "full_name": "Marcus Bennett",
+    "headline": "Senior Software Engineer",
+    "email": "marcus.bennett@example.com",
+    "phone": "+1 (555) 010-0142",
+    "location": "Austin, TX",
+    "links": [
+      { "kind": "linkedin", "url": "linkedin.com/in/marcus-bennett-example" },
+      { "kind": "portfolio", "label": "Blog", "url": "https://marcus.example.com" }
+    ]
+  },
+  "sections": [
+    {
+      "type": "summary",
+      "title": "Summary",
+      "items": [
+        {
+          "kind": "summary",
+          "text": "Backend engineer with 8 years of experience designing distributed systems in Go and Java. Led the migration of a monolithic payments platform to event-driven microservices. Comfortable owning services end to end, from design reviews to on-call."
+        }
+      ]
+    },
+    {
+      "type": "experience",
+      "title": "Experience",
+      "items": [
+        {
+          "title": "Senior Software Engineer",
+          "organization": "Contoso Payments",
+          "location": "Austin, TX",
+          "employment_type": "full_time",
+          "start": { "year": 2021, "month": 3 },
+          "current": true,
+          "technologies": ["Go", "Kafka", "PostgreSQL", "Kubernetes", "AWS"],
+          "bullets": [
+            { "text": "Led a team of 5 engineers migrating the payments monolith to 12 event-driven microservices on Kubernetes." },
+            { "text": "Reduced p99 checkout latency from 1.8s to 450ms by introducing Kafka-based async settlement." },
+            { "text": "Designed the idempotency layer that eliminated duplicate charges during retries." },
+            { "text": "Mentored 4 engineers; two were promoted to senior roles." }
+          ]
+        },
+        {
+          "title": "Software Engineer II",
+          "organization": "Fabrikam Logistics",
+          "location": "Dallas, TX",
+          "employment_type": "full_time",
+          "start": { "year": 2018, "month": 1 },
+          "end": { "year": 2021, "month": 2 },
+          "technologies": ["Java", "Spring Boot", "MySQL", "Redis"],
+          "bullets": [
+            { "text": "Built the route-optimization API serving 3M requests per day." },
+            { "text": "Introduced Redis caching, cutting database load by 40%." },
+            { "text": "Owned the CI pipeline migration from Jenkins to GitHub Actions." }
+          ]
+        },
+        {
+          "title": "Software Engineer",
+          "organization": "Tailspin Software",
+          "location": "Dallas, TX",
+          "employment_type": "full_time",
+          "start": { "year": 2016, "month": 6 },
+          "end": { "year": 2017, "month": 12 },
+          "bullets": [
+            { "text": "Developed internal reporting tools in Java and SQL for the finance team." }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "skills",
+      "title": "Skills",
+      "items": [
+        { "name": "Languages", "kind": "technical", "skills": ["Go", "Java", "Python", "SQL"] },
+        { "name": "Infrastructure", "kind": "technical", "skills": ["Kubernetes", "Docker", "AWS", "Terraform"] },
+        { "name": "Data", "kind": "technical", "skills": ["PostgreSQL", "MySQL", "Redis", "Kafka"] }
+      ]
+    },
+    {
+      "type": "education",
+      "title": "Education",
+      "items": [
+        {
+          "institution": "University of Example",
+          "degree": "B.S.",
+          "field_of_study": "Computer Science",
+          "start": { "year": 2012 },
+          "end": { "year": 2016 }
+        }
+      ]
+    },
+    {
+      "type": "certifications",
+      "title": "Certifications",
+      "items": [
+        { "name": "Certified Kubernetes Application Developer (CKAD)", "issuer": "Example Foundation", "issued": { "year": 2022, "month": 5 }, "expires": { "year": 2025, "month": 5 } }
+      ]
+    }
+  ]
+}

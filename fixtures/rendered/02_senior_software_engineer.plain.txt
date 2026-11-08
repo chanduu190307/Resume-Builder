@@ -1,0 +1,39 @@
+Marcus Bennett
+Senior Software Engineer
+marcus.bennett@example.com | +1 (555) 010-0142 | Austin, TX | linkedin.com/in/marcus-bennett-example | marcus.example.com
+
+SUMMARY
+Backend engineer with 8 years of experience designing distributed systems in Go and Java. Led the migration of a monolithic payments platform to event-driven microservices. Comfortable owning services end to end, from design reviews to on-call.
+
+EXPERIENCE
+Senior Software Engineer | Mar 2021 – Present
+Contoso Payments | Austin, TX
+- Led a team of 5 engineers migrating the payments monolith to 12 event-driven microservices on Kubernetes.
+- Reduced p99 checkout latency from 1.8s to 450ms by introducing Kafka-based async settlement.
+- Designed the idempotency layer that eliminated duplicate charges during retries.
+- Mentored 4 engineers; two were promoted to senior roles.
+Technologies: Go, Kafka, PostgreSQL, Kubernetes, AWS
+
+Software Engineer II | Jan 2018 – Feb 2021
+Fabrikam Logistics | Dallas, TX
+- Built the route-optimization API serving 3M requests per day.
+- Introduced Redis caching, cutting database load by 40%.
+- Owned the CI pipeline migration from Jenkins to GitHub Actions.
+Technologies: Java, Spring Boot, MySQL, Redis
+
+Software Engineer | Jun 2016 – Dec 2017
+Tailspin Software | Dallas, TX
+- Developed internal reporting tools in Java and SQL for the finance team.
+
+SKILLS
+Languages: Go, Java, Python, SQL
+Infrastructure: Kubernetes, Docker, AWS, Terraform
+Data: PostgreSQL, MySQL, Redis, Kafka
+
+EDUCATION
+B.S., Computer Science | 2012 – 2016
+University of Example
+
+CERTIFICATIONS
+Certified Kubernetes Application Developer (CKAD) | May 2022 – Expires May 2025
+Example Foundation

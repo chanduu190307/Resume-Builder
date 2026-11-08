@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.0",
+  "meta": { "title": "ML Research Engineer", "template": "classic", "page_size": "A4" },
+  "contact": {
+    "full_name": "Kenji Watanabe",
+    "headline": "Machine Learning Researcher",
+    "email": "kenji.watanabe@example.com",
+    "location": "Toronto, ON",
+    "links": [
+      { "kind": "website", "url": "https://kenji.example.org" },
+      { "kind": "github", "url": "https://github.com/kenji-w-example" }
+    ]
+  },
+  "sections": [
+    {
+      "type": "summary",
+      "title": "Research Summary",
+      "items": [
+        {
+          "kind": "summary",
+          "text": "PhD candidate researching efficient transformer architectures for low-resource speech recognition. Author of 3 peer-reviewed papers. Seeking research engineer roles in applied ML."
+        }
+      ]
+    },
+    {
+      "type": "education",
+      "title": "Education",
+      "items": [
+        {
+          "institution": "University of Example Toronto",
+          "degree": "PhD",
+          "field_of_study": "Computer Science",
+          "start": { "year": 2021, "month": 9 },
+          "current": true,
+          "bullets": [ { "text": "Thesis: Parameter-efficient adaptation of speech transformers." } ]
+        },
+        {
+          "institution": "Sample Institute of Science",
+          "degree": "M.Eng.",
+          "field_of_study": "Information Science",
+          "location": "Osaka, Japan",
+          "start": { "year": 2019, "month": 4 },
+          "end": { "year": 2021, "month": 3 }
+        }
+      ]
+    },
+    {
+      "type": "experience",
+      "title": "Research Experience",
+      "items": [
+        {
+          "title": "Research Intern",
+          "organization": "Litware AI Lab",
+          "location": "Montreal, QC",
+          "employment_type": "internship",
+          "start": { "year": 2024, "month": 5 },
+          "end": { "year": 2024, "month": 8 },
+          "technologies": ["PyTorch", "JAX"],
+          "bullets": [
+            { "text": "Implemented low-rank adapters for a 300M-parameter speech model, matching full fine-tuning accuracy with 2% of trainable parameters." },
+            { "text": "Open-sourced the training code and evaluation scripts." }
+          ]
+        },
+        {
+          "title": "Graduate Research Assistant",
+          "organization": "University of Example Toronto",
+          "employment_type": "part_time",
+          "start": { "year": 2021, "month": 9 },
+          "current": true,
+          "bullets": [
+            { "text": "Teaching assistant for the graduate Machine Learning course (2 terms)." }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "publications",
+      "title": "Publications",
+      "items": [
+        {
+          "title": "Adapter Tuning for Low-Resource Speech Recognition",
+          "authors": "K. Watanabe, A. Example",
+          "publisher": "Proceedings of the Example Speech Conference",
+          "date": { "year": 2024 }
+        },
+        {
+          "title": "Pruning Attention Heads in Streaming ASR",
+          "authors": "K. Watanabe, B. Sample, A. Example",
+          "publisher": "Example Workshop on Efficient ML",
+          "date": { "year": 2023 }
+        }
+      ]
+    },
+    {
+      "type": "awards",
+      "title": "Awards",
+      "items": [
+        { "title": "Graduate Research Fellowship", "issuer": "University of Example Toronto", "date": { "year": 2021 } }
+      ]
+    },
+    {
+      "type": "skills",
+      "title": "Skills",
+      "items": [
+        { "name": "ML", "kind": "technical", "skills": ["PyTorch", "JAX", "Hugging Face Transformers", "Speech recognition"] },
+        { "name": "Programming", "kind": "technical", "skills": ["Python", "C++", "CUDA"] }
+      ]
+    },
+    {
+      "type": "languages",
+      "title": "Languages",
+      "visible": false,
+      "items": [
+        { "language": "Japanese", "proficiency": "Native" },
+        { "language": "English", "proficiency": "Professional" }
+      ]
+    }
+  ]
+}

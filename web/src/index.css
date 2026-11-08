@@ -1,0 +1,197 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens - "Kinetic Solitude" (Phase 7, designed in Google Stitch).
+ * Warm neutral canvas, faint indigo / violet / sky glows for depth, frosted glass
+ * for floating chrome, one indigo accent. Motion is used only where it explains
+ * something (scores, page changes, depth on the home page) and is switched off
+ * for users who prefer reduced motion.
+ * Use these tokens (bg-canvas, text-ink, border-line, ...) instead of raw colours.
+ */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-canvas: #f7f7f5;        /* app background */
+  --color-surface: #ffffff;       /* cards, panels */
+  --color-subtle: #f1f1ef;        /* hover / secondary fills */
+  --color-line: #e7e6e3;          /* borders */
+  --color-line-strong: #d4d3cf;
+
+  --color-ink: #18181b;           /* primary text */
+  --color-ink-muted: #52525b;     /* secondary text */
+  --color-ink-faint: #6b6d72;     /* tertiary text, placeholders (meets WCAG AA 4.5:1 on all surfaces) */
+
+  --color-accent: #4f46e5;        /* the single accent (indigo) */
+  --color-accent-hover: #4338ca;
+  --color-accent-soft: #eef0fe;
+
+  /* Atmosphere only: never used for text. */
+  --color-glow-indigo: #4f46e5;
+  --color-glow-violet: #8b5cf6;
+  --color-glow-sky: #0ea5e9;
+
+  --color-success: #2a7548;
+  --color-success-soft: #ecf6ef;
+  --color-warning: #93580a;
+  --color-warning-soft: #fdf4e6;
+  --color-danger: #b53d3d;
+  --color-danger-soft: #fbeeee;
+
+  --radius-card: 1rem;
+  --radius-panel: 1.25rem;
+  --shadow-card: 0 1px 2px rgb(24 24 27 / 0.04), 0 1px 1px rgb(24 24 27 / 0.02);
+  --shadow-raised: 0 4px 16px -2px rgb(24 24 27 / 0.06), 0 12px 32px -4px rgb(79 70 229 / 0.06);
+  --shadow-float: 0 18px 40px -12px rgb(24 24 27 / 0.18), 0 0 0 1px rgb(24 24 27 / 0.04);
+  --shadow-glow: 0 6px 18px -4px rgb(79 70 229 / 0.35);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  --animate-page-in: page-in 380ms var(--ease-out-soft) both;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-drift: drift 22s ease-in-out infinite alternate;
+  --animate-pulse-dot: pulse-dot 2.4s ease-out 3;
+  --animate-card-out-right: card-out-right 260ms var(--ease-out-soft) forwards;
+  --animate-card-out-left: card-out-left 260ms var(--ease-out-soft) forwards;
+
+  @keyframes page-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes drift {
+    from { transform: translate3d(-4%, -2%, 0) scale(1); }
+    to { transform: translate3d(4%, 3%, 0) scale(1.08); }
+  }
+  @keyframes card-out-right {
+    to { opacity: 0; transform: translateX(40px) scale(0.98); }
+  }
+  @keyframes card-out-left {
+    to { opacity: 0; transform: translateX(-40px) scale(0.98); }
+  }
+  @keyframes pulse-dot {
+    0% { box-shadow: 0 0 0 0 rgb(42 117 72 / 0.45); }
+    70%, 100% { box-shadow: 0 0 0 6px rgb(42 117 72 / 0); }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-canvas text-ink font-sans;
+    font-feature-settings: "cv11", "ss01";
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+  ::selection {
+    background: rgb(79 70 229 / 0.16);
+  }
+}
+
+@layer components {
+  /* Frosted glass for floating chrome (header, side panel, chips). Text on it keeps AA contrast
+     because the canvas behind it is always near-white. */
+  .glass {
+    background: rgb(255 255 255 / 0.72);
+    -webkit-backdrop-filter: saturate(160%) blur(16px);
+    backdrop-filter: saturate(160%) blur(16px);
+  }
+  .glass-strong {
+    background: rgb(255 255 255 / 0.88);
+    -webkit-backdrop-filter: saturate(160%) blur(20px);
+    backdrop-filter: saturate(160%) blur(20px);
+  }
+
+  /* Reveal-on-view: elements start slightly lowered and transparent, and settle when
+     data-shown is set by <Reveal>. Content is never hidden without JS (no data-reveal = shown). */
+  [data-reveal] {
+    transition:
+      opacity 560ms var(--ease-out-soft),
+      transform 560ms var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  [data-reveal="hidden"] {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  /* Pointer-driven depth. --px / --py are set in [-1, 1] by usePointerDepth(). */
+  .depth-layer {
+    transform: translate3d(calc(var(--px, 0) * var(--depth, 0) * 1px), calc(var(--py, 0) * var(--depth, 0) * 1px), 0);
+    transition: transform 500ms var(--ease-out-soft);
+    will-change: transform;
+  }
+  .tilt-3d {
+    transform: perspective(1400px) rotateX(calc(var(--tilt-x, 8deg) + var(--py, 0) * -6deg))
+      rotateY(calc(var(--tilt-y, -14deg) + var(--px, 0) * 8deg));
+    transform-style: preserve-3d;
+    transition: transform 600ms var(--ease-out-soft);
+    will-change: transform;
+  }
+}
+
+/* Live preview: a gentle 3D stack on devices with a mouse; flat on hover, focus and touch. */
+@media (hover: hover) and (pointer: fine) {
+  .preview-stage {
+    perspective: 1800px;
+  }
+  .preview-pages {
+    transform: rotateX(5deg) rotateY(-7deg) scale(0.96);
+    transform-origin: 50% 0;
+    transition: transform 600ms var(--ease-out-soft);
+  }
+  .preview-stage:hover .preview-pages,
+  .preview-stage:focus-within .preview-pages {
+    transform: none;
+  }
+}
+.preview-sheet {
+  animation: var(--animate-page-in);
+}
+
+/* Page transitions: React <ViewTransition> in AppShell tags the routed page with these classes.
+   The header and footer stay put; only the page fades out and the next one settles in. */
+::view-transition-old(.page-exit) {
+  animation: vt-page-out 160ms ease-in both;
+}
+::view-transition-new(.page-enter) {
+  animation: vt-page-in 340ms var(--ease-out-soft) 60ms both;
+}
+@keyframes vt-page-out {
+  to { opacity: 0; transform: translateY(-4px); }
+}
+@keyframes vt-page-in {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+/* Reduced motion: no transitions, no parallax, no drifting, nothing hidden. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-reveal="hidden"] {
+    opacity: 1;
+    transform: none;
+  }
+  .depth-layer {
+    transform: none;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,26 @@
+Senior Backend Engineer, Payments
+
+About Northbridge Finance
+Northbridge Finance is a fictional fintech company building payment infrastructure for small businesses.
+
+What you'll do
+- Design and build event-driven microservices that move money reliably at scale.
+- Own services end to end, from design reviews to on-call.
+- Improve latency and reliability of our checkout and settlement systems.
+- Mentor engineers and help shape our engineering culture.
+
+Requirements
+- 5+ years of experience building backend systems in production.
+- Strong proficiency in Golang or Java.
+- Experience with Apache Kafka or another event streaming platform.
+- Solid knowledge of PostgreSQL and SQL query optimisation.
+- Experience running services on Kubernetes and AWS.
+- Bachelor's degree in Computer Science or equivalent practical experience.
+
+Nice to have
+- Experience with Terraform and infrastructure as code.
+- Familiarity with gRPC.
+- Background in payments or financial services.
+
+Benefits
+- Remote-friendly, flexible hours, learning budget.

@@ -1,0 +1,37 @@
+Priya Nair
+Aspiring Data Analyst
+priya.nair@example.com | +44 7700 900123 | Manchester, UK | github.com/priya-nair-example
+PROFILE
+Secondary school mathematics teacher of 6 years transitioning into data analysis. Experienced in analysing student
+performance data in Excel and presenting findings to school leadership. Completed a professional data analytics
+certificate and several SQL and Python projects.
+DATA PROJECTS
+UK Housing Prices Dashboard Feb 2025 – Mar 2025
+github.com/priya-nair-example/housing-dashboard
+• Cleaned and modelled 10 years of public housing price data in SQL.
+• Built an interactive Power BI dashboard comparing regional price trends.
+Technologies: SQL, Power BI
+Student Attendance Analysis
+• Analysed anonymised attendance records to find patterns linked to exam results.
+Technologies: Python, pandas, Matplotlib
+WORK EXPERIENCE
+Mathematics Teacher Sep 2019 – Present
+Example Academy Manchester, UK
+• Tracked assessment data for 180 students per year in Excel and identified students needing intervention.
+• Presented termly performance reports to the senior leadership team.
+• Raised the share of students achieving grade 5 or above in GCSE maths from 58% to 71% over three years.
+Tutor (part-time) 2017 – 2019
+Self-employed · Freelance
+• Tutored A-level mathematics and statistics students.
+SKILLS
+Data: SQL, Excel, Power BI, Python, pandas
+Professional: Presenting to stakeholders, Communication, Mentoring
+CERTIFICATIONS
+Professional Data Analytics Certificate Dec 2024
+Example Online Learning
+EDUCATION
+PGCE, Secondary Mathematics 2019
+University of Sampleton
+BSc, Mathematics 2015 – 2018
+University of Sampleton
+First Class Honours

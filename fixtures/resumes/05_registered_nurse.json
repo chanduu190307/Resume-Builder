@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "meta": { "title": "Registered Nurse - ICU", "template": "classic", "page_size": "Letter" },
+  "contact": {
+    "full_name": "Grace Okafor",
+    "headline": "Registered Nurse, BSN",
+    "email": "grace.okafor@example.com",
+    "phone": "555-010-0177",
+    "location": "Chicago, IL"
+  },
+  "sections": [
+    {
+      "type": "summary",
+      "title": "Summary",
+      "items": [
+        {
+          "kind": "summary",
+          "text": "Registered nurse with 5 years of critical care experience in a 24-bed medical ICU. Skilled in ventilator management, hemodynamic monitoring and family education."
+        }
+      ]
+    },
+    {
+      "type": "certifications",
+      "title": "Licenses & Certifications",
+      "items": [
+        { "name": "Registered Nurse (RN) License", "issuer": "State of Illinois", "credential_id": "RN-0000000" },
+        { "name": "Critical Care Registered Nurse (CCRN)", "issuer": "Example Association of Critical-Care Nurses", "issued": { "year": 2022 } },
+        { "name": "Advanced Cardiovascular Life Support (ACLS)", "issuer": "Example Heart Association", "expires": { "year": 2026, "month": 9 } },
+        { "name": "Basic Life Support (BLS)", "issuer": "Example Heart Association", "expires": { "year": 2026, "month": 9 } }
+      ]
+    },
+    {
+      "type": "experience",
+      "title": "Clinical Experience",
+      "items": [
+        {
+          "title": "Staff Nurse, Medical ICU",
+          "organization": "Example General Hospital",
+          "location": "Chicago, IL",
+          "employment_type": "full_time",
+          "start": { "year": 2021, "month": 7 },
+          "current": true,
+          "bullets": [
+            { "text": "Provide care for 1-2 critically ill patients per shift, including ventilated and post-cardiac-arrest patients." },
+            { "text": "Serve as charge nurse on night shift for a 24-bed unit." },
+            { "text": "Precept newly hired nurses through a 12-week ICU orientation." }
+          ]
+        },
+        {
+          "title": "Staff Nurse, Medical-Surgical",
+          "organization": "Sample Community Hospital",
+          "location": "Evanston, IL",
+          "employment_type": "full_time",
+          "start": { "year": 2019, "month": 8 },
+          "end": { "year": 2021, "month": 6 },
+          "bullets": [
+            { "text": "Cared for 5-6 patients per shift on a 32-bed medical-surgical floor." },
+            { "text": "Member of the unit falls-prevention committee." }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "education",
+      "title": "Education",
+      "items": [
+        {
+          "institution": "Example University College of Nursing",
+          "degree": "Bachelor of Science in Nursing (BSN)",
+          "start": { "year": 2015 },
+          "end": { "year": 2019 },
+          "bullets": [ { "text": "Dean's List, 6 semesters" } ]
+        }
+      ]
+    },
+    {
+      "type": "skills",
+      "title": "Clinical Skills",
+      "items": [
+        { "kind": "domain", "skills": ["Ventilator management", "Hemodynamic monitoring", "Central line care", "Sepsis protocols", "Patient and family education"] },
+        { "name": "Systems", "kind": "tool", "skills": ["Epic EHR"] }
+      ]
+    }
+  ]
+}

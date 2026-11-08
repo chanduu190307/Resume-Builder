@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "meta": { "title": "Data Analyst (career change)", "template": "classic", "page_size": "A4" },
+  "contact": {
+    "full_name": "Priya Nair",
+    "headline": "Aspiring Data Analyst",
+    "email": "priya.nair@example.com",
+    "phone": "+44 7700 900123",
+    "location": "Manchester, UK",
+    "links": [ { "kind": "github", "url": "https://github.com/priya-nair-example" } ]
+  },
+  "sections": [
+    {
+      "type": "summary",
+      "title": "Profile",
+      "items": [
+        {
+          "kind": "summary",
+          "text": "Secondary school mathematics teacher of 6 years transitioning into data analysis. Experienced in analysing student performance data in Excel and presenting findings to school leadership. Completed a professional data analytics certificate and several SQL and Python projects."
+        }
+      ]
+    },
+    {
+      "type": "projects",
+      "title": "Data Projects",
+      "items": [
+        {
+          "name": "UK Housing Prices Dashboard",
+          "url": "https://github.com/priya-nair-example/housing-dashboard",
+          "start": { "year": 2025, "month": 2 },
+          "end": { "year": 2025, "month": 3 },
+          "technologies": ["SQL", "Power BI"],
+          "bullets": [
+            { "text": "Cleaned and modelled 10 years of public housing price data in SQL." },
+            { "text": "Built an interactive Power BI dashboard comparing regional price trends." }
+          ]
+        },
+        {
+          "name": "Student Attendance Analysis",
+          "technologies": ["Python", "pandas", "Matplotlib"],
+          "bullets": [
+            { "text": "Analysed anonymised attendance records to find patterns linked to exam results." }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "experience",
+      "title": "Work Experience",
+      "items": [
+        {
+          "title": "Mathematics Teacher",
+          "organization": "Example Academy",
+          "location": "Manchester, UK",
+          "employment_type": "full_time",
+          "start": { "year": 2019, "month": 9 },
+          "current": true,
+          "bullets": [
+            { "text": "Tracked assessment data for 180 students per year in Excel and identified students needing intervention." },
+            { "text": "Presented termly performance reports to the senior leadership team." },
+            { "text": "Raised the share of students achieving grade 5 or above in GCSE maths from 58% to 71% over three years." }
+          ]
+        },
+        {
+          "title": "Tutor (part-time)",
+          "organization": "Self-employed",
+          "employment_type": "freelance",
+          "start": { "year": 2017 },
+          "end": { "year": 2019 },
+          "bullets": [ { "text": "Tutored A-level mathematics and statistics students." } ]
+        }
+      ]
+    },
+    {
+      "type": "skills",
+      "title": "Skills",
+      "items": [
+        { "name": "Data", "kind": "technical", "skills": ["SQL", "Excel", "Power BI", "Python", "pandas"] },
+        { "name": "Professional", "kind": "soft", "skills": ["Presenting to stakeholders", "Communication", "Mentoring"] }
+      ]
+    },
+    {
+      "type": "certifications",
+      "title": "Certifications",
+      "items": [
+        { "name": "Professional Data Analytics Certificate", "issuer": "Example Online Learning", "issued": { "year": 2024, "month": 12 } }
+      ]
+    },
+    {
+      "type": "education",
+      "title": "Education",
+      "items": [
+        {
+          "institution": "University of Sampleton",
+          "degree": "PGCE",
+          "field_of_study": "Secondary Mathematics",
+          "end": { "year": 2019 }
+        },
+        {
+          "institution": "University of Sampleton",
+          "degree": "BSc",
+          "field_of_study": "Mathematics",
+          "start": { "year": 2015 },
+          "end": { "year": 2018 },
+          "grade": "First Class Honours"
+        }
+      ]
+    }
+  ]
+}

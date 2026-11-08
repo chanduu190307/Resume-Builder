@@ -1,0 +1,1408 @@
+{
+  "$defs": {
+    "AwardItem": {
+      "additionalProperties": false,
+      "properties": {
+        "date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PartialDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "description": {
+          "anyOf": [
+            {
+              "maxLength": 5000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "issuer": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Issuer"
+        },
+        "title": {
+          "default": "",
+          "maxLength": 300,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "title": "AwardItem",
+      "type": "object"
+    },
+    "AwardsSection": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/AwardItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "title": {
+          "description": "Heading shown on the resume; user-editable.",
+          "maxLength": 300,
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "const": "awards",
+          "default": "awards",
+          "title": "Type",
+          "type": "string"
+        },
+        "visible": {
+          "default": true,
+          "title": "Visible",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "AwardsSection",
+      "type": "object"
+    },
+    "Bullet": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "origin": {
+          "default": "user",
+          "enum": [
+            "user",
+            "ai_assisted"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 1000,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "Bullet",
+      "type": "object"
+    },
+    "CertificationItem": {
+      "additionalProperties": false,
+      "properties": {
+        "credential_id": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Credential Id"
+        },
+        "expires": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PartialDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "issued": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PartialDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "issuer": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Issuer"
+        },
+        "name": {
+          "default": "",
+          "maxLength": 300,
+          "title": "Name",
+          "type": "string"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        }
+      },
+      "title": "CertificationItem",
+      "type": "object"
+    },
+    "CertificationsSection": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/CertificationItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "title": {
+          "description": "Heading shown on the resume; user-editable.",
+          "maxLength": 300,
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "const": "certifications",
+          "default": "certifications",
+          "title": "Type",
+          "type": "string"
+        },
+        "visible": {
+          "default": true,
+          "title": "Visible",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "CertificationsSection",
+      "type": "object"
+    },
+    "Contact": {
+      "additionalProperties": false,
+      "properties": {
+        "email": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Email"
+        },
+        "full_name": {
+          "default": "",
+          "maxLength": 300,
+          "title": "Full Name",
+          "type": "string"
+        },
+        "headline": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Professional title shown under the name.",
+          "title": "Headline"
+        },
+        "links": {
+          "items": {
+            "$ref": "#/$defs/Link"
+          },
+          "title": "Links",
+          "type": "array"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Location"
+        },
+        "phone": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Phone"
+        }
+      },
+      "title": "Contact",
+      "type": "object"
+    },
+    "CustomItem": {
+      "additionalProperties": false,
+      "properties": {
+        "bullets": {
+          "items": {
+            "$ref": "#/$defs/Bullet"
+          },
+          "title": "Bullets",
+          "type": "array"
+        },
+        "date_text": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Free-form date text for unusual sections.",
+          "title": "Date Text"
+        },
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Location"
+        },
+        "subtitle": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subtitle"
+        },
+        "title": {
+          "default": "",
+          "maxLength": 300,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "title": "CustomItem",
+      "type": "object"
+    },
+    "CustomSection": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/CustomItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "title": {
+          "description": "Heading shown on the resume; user-editable.",
+          "maxLength": 300,
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "const": "custom",
+          "default": "custom",
+          "title": "Type",
+          "type": "string"
+        },
+        "visible": {
+          "default": true,
+          "title": "Visible",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "CustomSection",
+      "type": "object"
+    },
+    "EducationItem": {
+      "additionalProperties": false,
+      "properties": {
+        "bullets": {
+          "items": {
+            "$ref": "#/$defs/Bullet"
+          },
+          "title": "Bullets",
+          "type": "array"
+        },
+        "current": {
+          "default": false,
+          "description": "True if this is ongoing ('Present').",
+          "title": "Current",
+          "type": "boolean"
+        },
+        "degree": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Degree"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PartialDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "field_of_study": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Field Of Study"
+        },
+        "grade": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Kept verbatim, e.g. 'CGPA 8.4/10' or '3.7 GPA'.",
+          "title": "Grade"
+        },
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "institution": {
+          "default": "",
+          "maxLength": 300,
+          "title": "Institution",
+          "type": "string"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Location"
+        },
+        "start": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PartialDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "EducationItem",
+      "type": "object"
+    },
+    "EducationSection": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/EducationItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "title": {
+          "description": "Heading shown on the resume; user-editable.",
+          "maxLength": 300,
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "const": "education",
+          "default": "education",
+          "title": "Type",
+          "type": "string"
+        },
+        "visible": {
+          "default": true,
+          "title": "Visible",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "EducationSection",
+      "type": "object"
+    },
+    "ExperienceItem": {
+      "additionalProperties": false,
+      "properties": {
+        "bullets": {
+          "items": {
+            "$ref": "#/$defs/Bullet"
+          },
+          "title": "Bullets",
+          "type": "array"
+        },
+        "current": {
+          "default": false,
+          "description": "True if this is ongoing ('Present').",
+          "title": "Current",
+          "type": "boolean"
+        },
+        "employment_type": {
+          "anyOf": [
+            {
+              "enum": [
+                "full_time",
+                "part_time",
+                "internship",
+                "contract",
+                "freelance",
+                "volunteer",
+                "other"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Employment Type"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PartialDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Location"
+        },
+        "organization": {
+          "default": "",
+          "description": "Company or organisation.",
+          "maxLength": 300,
+          "title": "Organization",
+          "type": "string"
+        },
+        "start": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PartialDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "technologies": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Technologies",
+          "type": "array"
+        },
+        "title": {
+          "default": "",
+          "description": "Job title.",
+          "maxLength": 300,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "title": "ExperienceItem",
+      "type": "object"
+    },
+    "ExperienceSection": {
+      "additionalProperties": false,
+      "description": "Also used for internships and volunteering (see ``employment_type``).",
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/ExperienceItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "title": {
+          "description": "Heading shown on the resume; user-editable.",
+          "maxLength": 300,
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "const": "experience",
+          "default": "experience",
+          "title": "Type",
+          "type": "string"
+        },
+        "visible": {
+          "default": true,
+          "title": "Visible",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "ExperienceSection",
+      "type": "object"
+    },
+    "LanguageItem": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "language": {
+          "maxLength": 300,
+          "title": "Language",
+          "type": "string"
+        },
+        "proficiency": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Kept verbatim, e.g. 'Native' or 'B2'.",
+          "title": "Proficiency"
+        }
+      },
+      "required": [
+        "language"
+      ],
+      "title": "LanguageItem",
+      "type": "object"
+    },
+    "LanguagesSection": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/LanguageItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "title": {
+          "description": "Heading shown on the resume; user-editable.",
+          "maxLength": 300,
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "const": "languages",
+          "default": "languages",
+          "title": "Type",
+          "type": "string"
+        },
+        "visible": {
+          "default": true,
+          "title": "Visible",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "LanguagesSection",
+      "type": "object"
+    },
+    "Link": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "default": "other",
+          "enum": [
+            "linkedin",
+            "github",
+            "portfolio",
+            "website",
+            "other"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        },
+        "url": {
+          "maxLength": 1000,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "title": "Link",
+      "type": "object"
+    },
+    "PartialDate": {
+      "additionalProperties": false,
+      "description": "A date that may be known only to the year (``2021``) or year+month.",
+      "properties": {
+        "month": {
+          "anyOf": [
+            {
+              "maximum": 12,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Month"
+        },
+        "year": {
+          "maximum": 2100,
+          "minimum": 1900,
+          "title": "Year",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "year"
+      ],
+      "title": "PartialDate",
+      "type": "object"
+    },
+    "ProjectItem": {
+      "additionalProperties": false,
+      "properties": {
+        "bullets": {
+          "items": {
+            "$ref": "#/$defs/Bullet"
+          },
+          "title": "Bullets",
+          "type": "array"
+        },
+        "current": {
+          "default": false,
+          "description": "True if this is ongoing ('Present').",
+          "title": "Current",
+          "type": "boolean"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PartialDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "default": "",
+          "maxLength": 300,
+          "title": "Name",
+          "type": "string"
+        },
+        "organization": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Company, course or club the project was for.",
+          "title": "Organization"
+        },
+        "role": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Role"
+        },
+        "start": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PartialDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "technologies": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Technologies",
+          "type": "array"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        }
+      },
+      "title": "ProjectItem",
+      "type": "object"
+    },
+    "ProjectsSection": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/ProjectItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "title": {
+          "description": "Heading shown on the resume; user-editable.",
+          "maxLength": 300,
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "const": "projects",
+          "default": "projects",
+          "title": "Type",
+          "type": "string"
+        },
+        "visible": {
+          "default": true,
+          "title": "Visible",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "ProjectsSection",
+      "type": "object"
+    },
+    "PublicationItem": {
+      "additionalProperties": false,
+      "properties": {
+        "authors": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Authors"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PartialDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "description": {
+          "anyOf": [
+            {
+              "maxLength": 5000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "publisher": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Publisher"
+        },
+        "title": {
+          "default": "",
+          "maxLength": 1000,
+          "title": "Title",
+          "type": "string"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        }
+      },
+      "title": "PublicationItem",
+      "type": "object"
+    },
+    "PublicationsSection": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/PublicationItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "title": {
+          "description": "Heading shown on the resume; user-editable.",
+          "maxLength": 300,
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "const": "publications",
+          "default": "publications",
+          "title": "Type",
+          "type": "string"
+        },
+        "visible": {
+          "default": true,
+          "title": "Visible",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "PublicationsSection",
+      "type": "object"
+    },
+    "ResumeMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "page_size": {
+          "default": "A4",
+          "enum": [
+            "A4",
+            "Letter"
+          ],
+          "title": "Page Size",
+          "type": "string"
+        },
+        "template": {
+          "default": "classic",
+          "maxLength": 64,
+          "title": "Template",
+          "type": "string"
+        },
+        "title": {
+          "default": "Untitled resume",
+          "description": "Name of this resume version.",
+          "maxLength": 300,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "title": "ResumeMeta",
+      "type": "object"
+    },
+    "SkillGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "default": "technical",
+          "enum": [
+            "technical",
+            "tool",
+            "soft",
+            "domain",
+            "other"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Group label, e.g. 'Languages' or 'Cloud'.",
+          "title": "Name"
+        },
+        "skills": {
+          "items": {
+            "maxLength": 300,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Skills",
+          "type": "array"
+        }
+      },
+      "title": "SkillGroup",
+      "type": "object"
+    },
+    "SkillsSection": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/SkillGroup"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "title": {
+          "description": "Heading shown on the resume; user-editable.",
+          "maxLength": 300,
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "const": "skills",
+          "default": "skills",
+          "title": "Type",
+          "type": "string"
+        },
+        "visible": {
+          "default": true,
+          "title": "Visible",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "SkillsSection",
+      "type": "object"
+    },
+    "SummaryItem": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "default": "summary",
+          "enum": [
+            "summary",
+            "objective"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "origin": {
+          "default": "user",
+          "enum": [
+            "user",
+            "ai_assisted"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 5000,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "SummaryItem",
+      "type": "object"
+    },
+    "SummarySection": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/SummaryItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "title": {
+          "description": "Heading shown on the resume; user-editable.",
+          "maxLength": 300,
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "const": "summary",
+          "default": "summary",
+          "title": "Type",
+          "type": "string"
+        },
+        "visible": {
+          "default": true,
+          "title": "Visible",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "SummarySection",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A complete resume. Section order in ``sections`` is the display order.",
+  "properties": {
+    "contact": {
+      "$ref": "#/$defs/Contact"
+    },
+    "id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Id",
+      "type": "string"
+    },
+    "meta": {
+      "$ref": "#/$defs/ResumeMeta"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sections": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "awards": "#/$defs/AwardsSection",
+            "certifications": "#/$defs/CertificationsSection",
+            "custom": "#/$defs/CustomSection",
+            "education": "#/$defs/EducationSection",
+            "experience": "#/$defs/ExperienceSection",
+            "languages": "#/$defs/LanguagesSection",
+            "projects": "#/$defs/ProjectsSection",
+            "publications": "#/$defs/PublicationsSection",
+            "skills": "#/$defs/SkillsSection",
+            "summary": "#/$defs/SummarySection"
+          },
+          "propertyName": "type"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/SummarySection"
+          },
+          {
+            "$ref": "#/$defs/ExperienceSection"
+          },
+          {
+            "$ref": "#/$defs/EducationSection"
+          },
+          {
+            "$ref": "#/$defs/ProjectsSection"
+          },
+          {
+            "$ref": "#/$defs/SkillsSection"
+          },
+          {
+            "$ref": "#/$defs/CertificationsSection"
+          },
+          {
+            "$ref": "#/$defs/PublicationsSection"
+          },
+          {
+            "$ref": "#/$defs/LanguagesSection"
+          },
+          {
+            "$ref": "#/$defs/AwardsSection"
+          },
+          {
+            "$ref": "#/$defs/CustomSection"
+          }
+        ]
+      },
+      "title": "Sections",
+      "type": "array"
+    }
+  },
+  "title": "Resume",
+  "type": "object"
+}

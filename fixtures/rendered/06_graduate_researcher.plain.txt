@@ -1,0 +1,42 @@
+Kenji Watanabe
+Machine Learning Researcher
+kenji.watanabe@example.com | Toronto, ON | kenji.example.org | github.com/kenji-w-example
+
+RESEARCH SUMMARY
+PhD candidate researching efficient transformer architectures for low-resource speech recognition. Author of 3 peer-reviewed papers. Seeking research engineer roles in applied ML.
+
+EDUCATION
+PhD, Computer Science | Sep 2021 – Present
+University of Example Toronto
+- Thesis: Parameter-efficient adaptation of speech transformers.
+
+M.Eng., Information Science | Apr 2019 – Mar 2021
+Sample Institute of Science | Osaka, Japan
+
+RESEARCH EXPERIENCE
+Research Intern | May 2024 – Aug 2024
+Litware AI Lab · Internship | Montreal, QC
+- Implemented low-rank adapters for a 300M-parameter speech model, matching full fine-tuning accuracy with 2% of trainable parameters.
+- Open-sourced the training code and evaluation scripts.
+Technologies: PyTorch, JAX
+
+Graduate Research Assistant | Sep 2021 – Present
+University of Example Toronto · Part-time
+- Teaching assistant for the graduate Machine Learning course (2 terms).
+
+PUBLICATIONS
+Adapter Tuning for Low-Resource Speech Recognition | 2024
+Proceedings of the Example Speech Conference
+K. Watanabe, A. Example
+
+Pruning Attention Heads in Streaming ASR | 2023
+Example Workshop on Efficient ML
+K. Watanabe, B. Sample, A. Example
+
+AWARDS
+Graduate Research Fellowship | 2021
+University of Example Toronto
+
+SKILLS
+ML: PyTorch, JAX, Hugging Face Transformers, Speech recognition
+Programming: Python, C++, CUDA
