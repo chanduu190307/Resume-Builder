@@ -198,3 +198,13 @@ fictional regression tests (`tests/test_parser_realworld.py`); corpus accuracy u
   and no replacement may repeat words (it produced "data structures and algorithms & Algorithms").
 - Not done (needs a model change): certification descriptions have no field and go to "Imported text to
   review" (nothing is lost).
+
+## D32 - Hosting: one Render web service (engine serves the app)
+The user dropped Netlify. `render.yaml` defines a single free Python web service: the build runs
+`npm ci && npm run build` (Node is available in Render's native runtimes) and `pip install ./engine`; the
+engine then serves `web/dist` when `RESUME_ENGINE_WEB_DIST` is set (`api/web.py`, a catch-all GET route
+added after all API routes). Same origin means no CORS and no `VITE_API_BASE`; unknown `/api/...` paths
+stay 404s; client-side routes get `index.html`; hashed assets are cached for a year; `.mjs` is served as
+JavaScript (the pdf.js worker). `GROQ_API_KEY` is a `sync: false` secret entered in Render, never committed.
+Because Windows Smart App Control blocks the engine on the developer PC, GitHub Actions runs the test suites
+and the exact Render build/start with HTTP smoke checks on Linux.

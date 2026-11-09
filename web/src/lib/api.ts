@@ -38,7 +38,11 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     headers: { "Content-Type": "application/json", ...init?.headers },
   });
   const body: unknown = await res.json().catch(() => null);
-  if (!res.ok) throw new ApiError(res.status, body);
+  if (!res.ok) {
+    const err = new ApiError(res.status, body);
+    warnIfEngineMissing(apiUrl(path), err);
+    throw err;
+  }
   return body as T;
 }
 
@@ -59,16 +63,35 @@ export interface ImportResponse {
 }
 
 /** Turns an API failure into a sentence the user can act on. */
+const ENGINE_UNREACHABLE =
+  "The resume engine (the server that reads your file) is not reachable right now, so the file could not be read. Please try again later.";
+
+/** A 404/405 without the engine's JSON body: the request reached a web host that has no engine. */
+function engineMissing(err: ApiError): boolean {
+  return (err.status === 404 || err.status === 405) && err.body === null;
+}
+
 export function describeImportError(err: unknown): string {
   if (err instanceof ApiError) {
     const detail = (err.body as { detail?: { message?: string } | string } | null)?.detail;
     if (detail && typeof detail === "object" && detail.message) return detail.message;
     if (err.status === 413) return "The file is larger than 5 MB.";
-    if (err.status >= 500) return "The resume engine is not running. Start it (scripts/dev.ps1) and try again.";
+    if (err.status >= 500 || engineMissing(err)) return ENGINE_UNREACHABLE;
     return "The resume could not be imported.";
   }
   if (err instanceof DOMException && err.name === "AbortError") return "Import cancelled.";
-  return "The resume engine is not reachable. Start it (scripts/dev.ps1) and try again.";
+  return ENGINE_UNREACHABLE;
+}
+
+/** Developer hint in the console when the engine is not where the app expects it. */
+function warnIfEngineMissing(url: string, err: ApiError): void {
+  if (engineMissing(err)) {
+    console.warn(
+      `Resume engine not found at ${url}. Locally, start it with scripts/dev.ps1. If the web app is hosted ` +
+        "separately (Netlify, Render static site...), set VITE_API_BASE to the engine's URL at build time and " +
+        "allow this site in the engine's RESUME_ENGINE_CORS_ORIGINS.",
+    );
+  }
 }
 
 export async function importResumeFile(file: File, signal?: AbortSignal): Promise<ImportResponse> {
@@ -76,7 +99,11 @@ export async function importResumeFile(file: File, signal?: AbortSignal): Promis
   form.append("file", file);
   const res = await fetch(apiUrl("/api/import/file"), { method: "POST", body: form, signal });
   const body: unknown = await res.json().catch(() => null);
-  if (!res.ok) throw new ApiError(res.status, body);
+  if (!res.ok) {
+    const err = new ApiError(res.status, body);
+    warnIfEngineMissing(apiUrl("/api/import/file"), err);
+    throw err;
+  }
   return body as ImportResponse;
 }
 
@@ -118,11 +145,11 @@ export function describeError(err: unknown, fallback: string): string {
   if (err instanceof ApiError) {
     const detail = (err.body as { detail?: { message?: string } } | null)?.detail;
     if (detail && typeof detail === "object" && detail.message) return detail.message;
-    if (err.status >= 500) return "The resume engine is not running. Start it (scripts/dev.ps1) and try again.";
+    if (err.status >= 500 || engineMissing(err)) return ENGINE_UNREACHABLE;
     return fallback;
   }
   if (err instanceof DOMException && err.name === "AbortError") return "Cancelled.";
-  return "The resume engine is not reachable. Start it (scripts/dev.ps1) and try again.";
+  return ENGINE_UNREACHABLE;
 }
 
 export function fetchJobFromUrl(url: string, signal?: AbortSignal): Promise<FetchedJobOut> {

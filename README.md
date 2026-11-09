@@ -24,6 +24,15 @@ Anthropic/Claude key is used. Without a key everything still works; AI only assi
 layouts and the optional rewording / polish features. Groq models read text only, so scanned
 (image-only) PDFs cannot be read.
 
+## Deploy on Render (free)
+`render.yaml` describes one free web service: it builds the web app, installs the engine, and the engine
+serves both the API and the app from one URL (no CORS setup needed).
+1. Render Dashboard > **New > Blueprint** > connect `chanduu190307/Resume-Builder` (or open
+   https://render.com/deploy?repo=https://github.com/chanduu190307/Resume-Builder).
+2. Enter `GROQ_API_KEY` when asked, then **Apply**. Every push to `main` redeploys.
+Free services sleep after 15 minutes without traffic; the first request then takes about a minute.
+GitHub Actions (`.github/workflows/ci.yml`) runs all tests and the same build/start as Render on every push.
+
 ## Requirements
 - Python 3.12+ (developed on 3.14)
 - Node.js 22+ (developed on 24)

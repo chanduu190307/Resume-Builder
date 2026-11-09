@@ -1,0 +1,28 @@
+# Render Blueprint: one free web service that builds the web app and runs the engine (D32).
+# The engine serves the built app and the API from the same URL, so no CORS or VITE_API_BASE is needed.
+# Deploy: Render Dashboard > New > Blueprint > pick this repo (you will be asked for GROQ_API_KEY), or
+# https://render.com/deploy?repo=https://github.com/chanduu190307/Resume-Builder
+services:
+  - type: web
+    name: resume-builder
+    runtime: python
+    plan: free
+    region: singapore
+    branch: main
+    autoDeployTrigger: commit
+    # Node/npm are available in Render's native runtimes; the repo root is the working directory.
+    buildCommand: cd web && npm ci && npm run build && cd .. && pip install ./engine
+    startCommand: uvicorn resume_engine.api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.14.10
+      - key: RESUME_ENGINE_WEB_DIST
+        value: web/dist
+      # Secret: Render asks for it when the Blueprint is created. Never commit it.
+      - key: GROQ_API_KEY
+        sync: false
+      - key: RESUME_ENGINE_MODEL
+        value: openai/gpt-oss-120b
+      - key: RESUME_ENGINE_FALLBACK_MODELS
+        value: openai/gpt-oss-20b,qwen/qwen3.8-27b

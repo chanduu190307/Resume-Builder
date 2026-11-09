@@ -244,3 +244,13 @@ def cover_letter(body: CoverLetterRequest) -> CoverLetter:
         return polish_cover_letter(llm, body.resume, body.job, draft)
     except LLMError as err:
         raise HTTPException(status_code=502, detail={"code": "ai_failed", "message": str(err)}) from None
+
+
+# ----------------------------------------------------------------------------- web app (single-service hosting)
+# Must stay last: it adds a catch-all GET route after every API route.
+if os.environ.get("RESUME_ENGINE_WEB_DIST"):
+    from pathlib import Path
+
+    from .web import mount_web_app
+
+    mount_web_app(app, Path(os.environ["RESUME_ENGINE_WEB_DIST"]))
