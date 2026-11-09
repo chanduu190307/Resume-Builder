@@ -84,6 +84,24 @@ def _wording_upgrade(resume_term: str, job_term: str, canonical: str) -> bool:
     return _norm_term(resume_term) == _norm_term(job_term) and len(job_term) >= len(resume_term)
 
 
+def _plain_words(text: str) -> list[str]:
+    return re.findall(r"[a-z0-9+#.]+", text.lower().replace("&", " and "))
+
+
+def _says_already(skill_text: str, job_term: str) -> bool:
+    """The whole skill text already contains the job's wording ("Data Structures & Algorithms"
+    says "data structures and algorithms")."""
+    return f" {' '.join(_plain_words(job_term))} " in f" {' '.join(_plain_words(skill_text))} "
+
+
+def _would_repeat(skill_text: str, resume_term: str, job_term: str) -> bool:
+    """Replacing only `resume_term` would repeat words that are already in the rest of the text
+    ("Data Structures & Algorithms" -> "data structures and algorithms & Algorithms")."""
+    rest = set(_plain_words(skill_text.replace(resume_term, " "))) - {"and", "or", "of", "the"}
+    added = set(_plain_words(job_term)) - set(_plain_words(resume_term))
+    return bool(rest & added)
+
+
 _METRIC_QUESTIONS = [
     (r"^(built|developed|created|designed|launched|shipped|implemented|wrote|delivered)", "How many people used it, or what did it improve (time saved, errors reduced, revenue)?"),
     (r"^(reduced|cut|lowered|decreased|improved|increased|grew|boosted|raised|optimi[sz]ed|accelerated)", "By how much? A percentage, amount or before/after figure makes this concrete."),
@@ -145,6 +163,8 @@ def suggest(resume: Resume, job: JobAnalysis, result: MatchResult) -> list[Sugge
         for s, g, sk in skill_strings:
             hits = [h for h in find_skills(sk) if h.skill == k.skill]
             if not hits or not _wording_upgrade(hits[0].term, k.term, k.skill):
+                continue
+            if _says_already(sk, k.term) or _would_repeat(sk, hits[0].term, k.term):
                 continue
             new = sk.replace(hits[0].term, k.term)
             out.append(Suggestion(

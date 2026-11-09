@@ -3,11 +3,13 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { fileURLToPath } from "node:url";
+import { tailwindScanFallback } from "./vite/tailwindScanFallback.ts";
 
 const ENGINE_URL = process.env.ENGINE_URL ?? "http://127.0.0.1:8000";
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  // tailwindScanFallback must come before tailwindcss(); it does nothing where Tailwind can scan files itself.
+  plugins: [react(), tailwindScanFallback({ root: fileURLToPath(new URL(".", import.meta.url)), css: "src/index.css" }), tailwindcss()],
   server: {
     port: 5173,
     proxy: { "/api": ENGINE_URL },
@@ -24,6 +26,6 @@ export default defineConfig({
   },
   test: {
     environment: "node",
-    include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
+    include: ["src/**/*.test.ts", "src/**/*.test.tsx", "vite/**/*.test.ts"],
   },
 });

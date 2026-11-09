@@ -25,8 +25,8 @@ Read `docs/PLAN.md` (what to build, current phase) and `docs/DECISIONS.md` (why)
   - `analysis/` - Quality and Parsing Readiness scores, checks (deterministic)
   - `jobs/` - JD analysis, skills ontology, matching, tailoring suggestions, truthfulness guard, cover letter
   - `enhance/` - general improvements without a job
-  - `llm/` - the only place that talks to an AI provider: Groq by default, Anthropic optional (D29;
-    `StructuredLLM` protocol; tests use fakes)
+  - `llm/` - the only place that talks to an AI service: Groq only, free models with a fallback chain
+    (D29, D30; `StructuredLLM` protocol; tests use fakes). No Anthropic code or key is used anywhere.
   - `api/main.py` - HTTP API (`/api/...`)
 - `web/` - React + TypeScript + Tailwind v4. Data stored in the browser only.
   - `src/types/resume.generated.ts` - generated, never edit by hand

@@ -1,12 +1,11 @@
 """AI-assisted import, tested with a fake model (no network, no key)."""
 
 import copy
-from types import SimpleNamespace
 
 import pytest
 
 from resume_engine.importer import import_file, import_text
-from resume_engine.llm.client import ClaudeLLM, LLMError, set_llm_for_tests
+from resume_engine.llm.client import LLMError, set_llm_for_tests
 from resume_engine.llm.extract import EXTRACTION_SCHEMA, to_resume, uncovered_lines
 from resume_engine.ingest import normalize_lines
 from resume_engine.ingest.text import extract_text_lines
@@ -157,39 +156,6 @@ def test_rules_mode_never_calls_ai():
 
 
 # ---------------------------------------------------------------- the real client, with a stub SDK
-
-class StubMessages:
-    def __init__(self, response):
-        self.response, self.kwargs = response, None
-
-    def create(self, **kwargs):
-        self.kwargs = kwargs
-        return self.response
-
-
-def stub_client(response):
-    messages = StubMessages(response)
-    return SimpleNamespace(beta=SimpleNamespace(messages=messages)), messages
-
-
-def test_claude_llm_request_shape_and_parsing():
-    response = SimpleNamespace(stop_reason="end_turn", content=[SimpleNamespace(type="text", text='{"a": 1}')])
-    client, messages = stub_client(response)
-    llm = ClaudeLLM(client=client, model="claude-opus-5-5")
-    assert llm.generate_json(system="s", content=[{"type": "text", "text": "x"}], schema={"type": "object"}) == {"a": 1}
-    kw = messages.kwargs
-    assert kw["model"] == "claude-opus-5-5"
-    assert kw["output_config"]["format"] == {"type": "json_schema", "schema": {"type": "object"}}
-    assert kw["fallbacks"] == "default" and kw["betas"] == ["server-side-fallback-2026-07-01"]
-    assert "thinking" not in kw  # thinking is always on for this model; effort is the control
-
-
-@pytest.mark.parametrize("stop_reason, message", [("refusal", "declined"), ("max_tokens", "cut off")])
-def test_claude_llm_stop_reasons(stop_reason, message):
-    client, _ = stub_client(SimpleNamespace(stop_reason=stop_reason, content=[]))
-    with pytest.raises(LLMError, match=message):
-        ClaudeLLM(client=client).generate_json(system="s", content=[], schema={})
-
 
 def test_contact_warnings_resolved_by_ai_are_dropped_and_others_kept():
     source = """Sam Rivera ~ sam.rivera@example.com ~ Leeds

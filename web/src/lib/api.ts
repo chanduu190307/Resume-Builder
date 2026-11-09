@@ -21,8 +21,19 @@ export class ApiError extends Error {
   }
 }
 
+/**
+ * Full URL of an engine endpoint. Locally the engine is proxied at /api (same origin). When the web
+ * app is hosted separately (e.g. a Render static site), set VITE_API_BASE at build time to the
+ * engine's URL, e.g. https://resume-engine.onrender.com, and allow this site's origin in the
+ * engine's RESUME_ENGINE_CORS_ORIGINS.
+ */
+export function apiUrl(path: string): string {
+  const base = String(import.meta.env.VITE_API_BASE ?? "").trim().replace(/\/+$/, "");
+  return `${base}${path}`;
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(path, {
+  const res = await fetch(apiUrl(path), {
     ...init,
     headers: { "Content-Type": "application/json", ...init?.headers },
   });
@@ -63,7 +74,7 @@ export function describeImportError(err: unknown): string {
 export async function importResumeFile(file: File, signal?: AbortSignal): Promise<ImportResponse> {
   const form = new FormData();
   form.append("file", file);
-  const res = await fetch("/api/import/file", { method: "POST", body: form, signal });
+  const res = await fetch(apiUrl("/api/import/file"), { method: "POST", body: form, signal });
   const body: unknown = await res.json().catch(() => null);
   if (!res.ok) throw new ApiError(res.status, body);
   return body as ImportResponse;

@@ -18,11 +18,11 @@ Every suggestion is grounded in your real experience; nothing is invented.
 - Version history, an application tracker, and truthful cover letter drafts
 
 ## Optional: AI features
-Copy `engine/.env.example` to `engine/.env` and set `GROQ_API_KEY` (the default provider). To use
-Claude instead, set `RESUME_ENGINE_LLM_PROVIDER=anthropic` and `ANTHROPIC_API_KEY`. The engine only
-uses the provider you chose; it never falls back to another key on the machine. Without a key
-everything still works; AI only assists with unusual layouts and the optional rewording / polish
-features. Groq models read text only, so scanned PDFs need the Anthropic provider.
+Copy `engine/.env.example` to `engine/.env` and set `GROQ_API_KEY` (free at console.groq.com). AI is
+Groq only, using free models: if one model is rate limited or busy, the next free model is used. No
+Anthropic/Claude key is used. Without a key everything still works; AI only assists with unusual
+layouts and the optional rewording / polish features. Groq models read text only, so scanned
+(image-only) PDFs cannot be read.
 
 ## Requirements
 - Python 3.12+ (developed on 3.14)

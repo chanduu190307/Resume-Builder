@@ -21,6 +21,9 @@ async function audit(page: Page, name: string) {
 
 test("every page meets WCAG 2.1 AA automated checks", async ({ page }) => {
   test.setTimeout(180_000);
+  // Audit the settled page: with reduced motion, fade-ins finish instantly (D28), so contrast is not
+  // measured halfway through an animation (that made this test flaky). Final colours are the same.
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await page.evaluate(
     () =>

@@ -33,6 +33,10 @@ def normalize_text(text: str) -> str:
     return _SPACES.sub(" ", text).strip()
 
 
+# A list marker that is a whole segment on its own (PDFs often place the glyph apart from the text).
+_LONE_MARKERS = set("•●▪■◦○◆◇►▸▹➢➤✓✔∙–*-‣")
+
+
 def strip_bullet(text: str) -> tuple[str, bool]:
     """Remove a leading list marker. Returns (text, had_marker).
 
@@ -90,9 +94,13 @@ def normalize_lines(lines: list[Line], dropped: list[str] | None = None) -> list
         segments = [s for s in segments if s.text]
         if not segments:
             continue
-        text, had_marker = strip_bullet(segments[0].text)
-        if had_marker:
-            segments[0] = Segment(text.strip(), segments[0].bold, segments[0].italic)
+        if len(segments) > 1 and segments[0].text in _LONE_MARKERS:
+            # The marker was laid out as its own word ("" then a gap, then the text).
+            segments, had_marker = segments[1:], True
+        else:
+            text, had_marker = strip_bullet(segments[0].text)
+            if had_marker:
+                segments[0] = Segment(text.strip(), segments[0].bold, segments[0].italic)
         line.segments = segments
         line.bullet = line.bullet or had_marker
         result.append(line)

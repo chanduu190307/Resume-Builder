@@ -169,3 +169,32 @@ At the user's request the project uses its own Groq key instead of the Claude ke
   shown as "usage limit reached, try again in N seconds". Error logs contain Groq's error code only, never
   the body (it can echo generated resume text).
 - D18 still describes the Anthropic provider when it is selected.
+
+## D30 - Groq only, with a free-model fallback chain (supersedes the Anthropic part of D18/D29)
+At the user's request the Anthropic code path and the `anthropic` dependency were removed: no Anthropic key
+can be used by this project. `GROQ_API_KEY` is the only AI credential.
+- Free tier: each Groq model has its own budget (about 8,000 tokens per minute), and one AI import uses about
+  7,000. A request therefore walks a chain of free models (default `openai/gpt-oss-120b`, then
+  `openai/gpt-oss-20b`, then `qwen/qwen3.8-27b`; configurable) when a model is rate limited (429), overloaded
+  (5xx), times out, is missing (404) or answers badly. The same model is never retried, because a retry would
+  usually hit that model's per-minute limit.
+- The first model uses strict JSON-schema output. Live tests showed the two smaller models break on our
+  larger schemas in strict mode (e.g. output `{person}`), but answer correctly in JSON mode with the schema in
+  the instructions, so fallback models use JSON mode and their answers are checked by `llm/validate.py`
+  (a small validator for exactly the keywords our schemas use; unknown keywords are an error).
+- Nothing else changes: import values are verified against the document, rewording passes the truthfulness
+  guard, scores never use AI (D20). Error logs carry Groq's error code only.
+
+## D31 - Real-world import fixes (found with a real student resume)
+A real Indian-format student resume exposed parser gaps that our generated corpus never had. Fixed, with
+fictional regression tests (`tests/test_parser_realworld.py`); corpus accuracy unchanged at 99.8%:
+- An unknown ALL-CAPS line is a heading only if its font size/weight match this document's known headings
+  and it is not the first line (an ALL-CAPS name or project title is not a section).
+- A bullet glyph laid out as its own word (Symbol-font "") still marks a bullet.
+- Education: a new dated line starts the next school; "CGPA: 6.8" / "Percentage: 79.5" beside the degree is
+  the grade. Projects: "2. TITLE" at the left margin is a title, "Description:" labels are skipped, trailing
+  colons are removed. Dateless "Title / Issuer" certifications split on each bold title.
+- Tailoring: a skill that already says the job's wording ("Data Structures & Algorithms") is never rewritten,
+  and no replacement may repeat words (it produced "data structures and algorithms & Algorithms").
+- Not done (needs a model change): certification descriptions have no field and go to "Imported text to
+  review" (nothing is lost).

@@ -266,3 +266,20 @@ def test_cover_letter_polish_is_guarded():
     result = polish_cover_letter(FakeLLM({"text": bad}), r, j, draft)
     assert result.method == "draft" and result.text == draft
     assert any("numbers" in x for x in result.rejected_reasons) and any("Google" in x for x in result.rejected_reasons)
+
+
+def test_wording_never_garbles_a_skill_that_already_says_it():
+    """Found with a real resume: "Data Structures & Algorithms" became
+    "data structures and algorithms & Algorithms" because only the "Data Structures" part was replaced."""
+    r = Resume.model_validate({
+        "contact": {"full_name": "Test Person"},
+        "sections": [{"type": "skills", "title": "Skills", "items": [
+            {"name": "Core", "skills": ["Data Structures & Algorithms", "Operating Systems"]},
+        ]}],
+    })
+    j = analyze_job("Junior Developer\nRequirements\n- Understanding of data structures and algorithms.\n- Knowledge of SQL.")
+    wording = [s for s in suggest(r, j, match(r, j, today=TODAY)) if s.kind == "use_job_wording"]
+    assert not any(s.before == "Data Structures & Algorithms" for s in wording), [(s.before, s.after) for s in wording]
+    for s in wording:  # no replacement may repeat words that were already there
+        words = s.after.lower().split()
+        assert len(words) == len(set(words)), s.after

@@ -93,6 +93,13 @@ def heading_type(line: Line) -> str | None:
     return None
 
 
+def is_known_heading(line: Line) -> bool:
+    """A heading from the known list ("Education", "WORK EXPERIENCE:"), as opposed to an unknown
+    ALL-CAPS line that only looks like one."""
+    kind = heading_type(line)
+    return kind is not None and normalize_heading(line.text.strip().rstrip(":")) in HEADINGS
+
+
 SMALL_WORDS = {"and", "of", "the", "in", "for", "a", "an", "to", "on", "at", "or", "&"}
 
 

@@ -45,7 +45,7 @@ from ..schema import (
 )
 from . import contact as C
 from .dates import DateMatch, find_cert_dates, find_range, remove_span
-from .headings import display_title, heading_type, normalize_heading
+from .headings import display_title, heading_type, is_known_heading, normalize_heading
 
 UNSORTED_TITLE = "Imported text to review"
 
@@ -79,7 +79,7 @@ _DEGREE_WORDS = re.compile(
     re.IGNORECASE,
 )
 _GRADE_RE = re.compile(
-    r"(\bc?gpa\b|\bgrade\b|\bmarks?\b|\d{1,3}(?:\.\d+)?\s*%|\d(?:\.\d+)?\s*/\s*(?:4|5|10)(?:\.0)?\b|"
+    r"(\bc?gpa\b|\bgrade\b|\bmarks?\b|\bpercentage\b|\d{1,3}(?:\.\d+)?\s*%|\d(?:\.\d+)?\s*/\s*(?:4|5|10)(?:\.0)?\b|"
     r"\bhonou?rs\b|first class|second class|distinction|cum laude|magna|summa|merit)",
     re.IGNORECASE,
 )
@@ -142,6 +142,13 @@ def split_top_level(text: str, seps: str = ",;•|·") -> list[str]:
     return [i.strip() for i in items if i.strip()]
 
 
+_EMPTY_LABEL_RE = re.compile(
+    r"^\s*(description|project description|details|responsibilities|key responsibilities|achievements|"
+    r"key achievements|highlights|key highlights|features|key features|contributions|overview|summary|tasks)\s*:\s*$",
+    re.IGNORECASE,
+)
+
+
 def label_of(text: str) -> tuple[str, str] | None:
     m = _LABEL_RE.match(text)
     if not m or _words(m.group(1)) > 4:
@@ -149,6 +156,18 @@ def label_of(text: str) -> tuple[str, str] | None:
     if "http" in m.group(1).lower():
         return None
     return m.group(1).strip(), m.group(2).strip()
+
+
+def _style(line: Line) -> tuple[float, bool] | None:
+    """Font size (to the nearest half point) and boldness, or None when the source has no sizes."""
+    return (round(line.size * 2) / 2, line.bold) if line.size else None
+
+
+def _known_heading_styles(lines: list[Line]) -> set[tuple[float, bool]]:
+    """Styles of this document's recognised section headings ("Education", "SKILLS"...)."""
+    styles = {_style(l) for l in lines if is_known_heading(l)}
+    styles.discard(None)
+    return styles  # type: ignore[return-value]
 
 
 # ----------------------------------------------------------------------------- data
@@ -249,8 +268,15 @@ class ResumeParser:
     def _split_sections(self) -> tuple[list[Line], list[_RawSection]]:
         header: list[Line] = []
         sections: list[_RawSection] = []
-        for line in self.lines:
+        heading_styles = _known_heading_styles(self.lines)
+        for i, line in enumerate(self.lines):
             kind = heading_type(line)
+            if kind is not None and not is_known_heading(line):
+                # An unknown ALL-CAPS line is only a heading if it looks like this document's real
+                # headings. A name in capitals ("CHARAN S", larger) or a project title in capitals
+                # (smaller) is not. The first line of a document is never an unknown heading.
+                if i == 0 or (heading_styles and _style(line) not in heading_styles):
+                    kind = None
             if kind is not None:
                 sections.append(_RawSection(kind, display_title(line.text)))
                 self._place(line)
@@ -427,11 +453,23 @@ class ResumeParser:
         if entry.bullets or entry.labels:
             return True
         if not entry.header_done:
+            if (
+                line.bold
+                and not has_date
+                and len(entry.header) >= 2
+                and entry.header[0].bold
+                and not any(h.bold for h in entry.header[1:])
+            ):
+                # Bold title + plain line(s) so far, and here is the next bold title: entries
+                # without dates (e.g. "Course name" / "Issuer" certifications) start here.
+                return True
             return has_date and entry.date_idx is not None
         if line.bold and entry.header and entry.header[0].bold:
             return True  # titles are bold in this document, and this is the next title
         text = line.text
         if kind == "education":
+            if has_date and entry.date_idx is not None:
+                return True  # this entry already has its dates; a new dated line is the next school
             return not (_GRADE_RE.search(text) and _words(text) <= 8) and _words(text) < 9
         if kind == "publications":
             return has_date
@@ -453,6 +491,19 @@ class ResumeParser:
         for line in lines:
             self._place(line)
             text = line.text
+            margin = margins.get((line.page, line.column))
+            if (
+                line.bullet
+                and kind in ("projects", "experience")
+                and line.bold
+                and _words(text) <= 6
+                and line.x0 is not None
+                and margin is not None
+                and line.x0 <= margin + 3
+            ):
+                # "2. VOLTFLOW AI": a short bold numbered title at the section's left margin
+                # starts the next entry; real bullets are indented and not bold.
+                line.bullet = False
             if line.bullet:
                 if cur is None:
                     cur = _Entry()
@@ -461,6 +512,8 @@ class ResumeParser:
                 cur.last_bullet = line
                 cur.header_done = True
                 continue
+            if cur is not None and _EMPTY_LABEL_RE.match(text):
+                continue  # "Description:" / "Key achievements:" introduces the bullets; nothing to keep
             lab = label_of(text)
             if lab and cur is not None and (
                 lab[0].lower() in _TECH_LABELS | _CREDENTIAL_LABELS or cur.header_done or cur.bullets
@@ -641,6 +694,12 @@ class ResumeParser:
             date = self._take_date(e, pieces, "education")
             location = self._take_location(pieces)
             texts = self._texts(pieces)
+            grade = None
+            for t in texts[1:]:
+                if _GRADE_RE.search(t.text) and _words(t.text) <= 5:
+                    grade = t.text  # "CGPA: 6.8" / "Percentage: 79.5" beside the degree
+                    texts.remove(t)
+                    break
             degree_text, institution = "", ""
             if len(texts) >= 2:
                 a, b = texts[0].text, texts[1].text
@@ -658,7 +717,6 @@ class ResumeParser:
             degree, field_of_study = degree_text or None, None
             if degree_text and ", " in degree_text:
                 degree, field_of_study = (s.strip() for s in degree_text.split(", ", 1))
-            grade = None
             bullets = list(e.bullets)
             for line in e.body:
                 if grade is None and _GRADE_RE.search(line.text) and _words(line.text) <= 8:
@@ -695,7 +753,7 @@ class ResumeParser:
                     url = found[0]
                     p.text = p.text.replace(found[0], "").strip(" |·,")
             texts = self._texts(pieces)
-            name = texts[0].text if texts else ""
+            name = texts[0].text.rstrip(" :") if texts else ""
             role = org = None
             if len(texts) >= 2:
                 parts = [s.strip() for s in re.split(r"\s+·\s+", texts[1].text) if s.strip()]

@@ -159,6 +159,23 @@ delight. The editor stays still while typing. Easy to use comes first; effects n
 - [x] Fixed (found in the live check, affected both providers): after an AI-assisted import, rules-stage
       "No name / email / phone was found" warnings stayed even when the AI found the value
 
+## Full feature check with a real resume + Groq-only (DONE, 2026-11-09)
+
+- [x] Groq only: Anthropic code path and dependency removed; free-model fallback chain with validation (D30)
+- [x] Every feature exercised in Chrome with a real student resume and live Groq AI: import + review, editor,
+      preview, 3 templates, page size, PDF/DOCX export, analysis + ATS text, Improve (rules + AI), accept/undo,
+      version history, tailoring (match, accept, AI rewording, changes), cover letter (draft + AI polish +
+      download), applications, library + backup, privacy: 22/22 steps pass, no browser or server errors
+- [x] Import fixes found with that resume (D31): rules-only import went from empty contact / 16 unplaced lines
+      to full contact, correct education with grades, both projects, all certifications, 9 unplaced lines
+      (certification descriptions). Read-back of our own export: Parsing Readiness 62 -> 91
+- [x] Tailoring bug fixed: "Data Structures & Algorithms" was rewritten to "data structures and algorithms &
+      Algorithms"
+- [x] Windows Smart App Control started blocking Tailwind's native engine on this PC (pages unstyled);
+      `web/vite/tailwindScanFallback.ts` passes the class names to Tailwind when that happens (no effect elsewhere)
+- [x] a11y e2e audits the settled page (reduced motion), fixing a flaky contrast reading mid-fade
+- [ ] Certification descriptions need a field in the resume model (model change: proposed, not done)
+
 ## Possible next steps (not started)
 
 - Grow the import corpus with real resumes (with permission) and add more templates
