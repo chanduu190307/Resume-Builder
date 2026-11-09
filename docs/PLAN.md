@@ -176,6 +176,14 @@ delight. The editor stays still while typing. Easy to use comes first; effects n
 - [x] a11y e2e audits the settled page (reduced motion), fixing a flaky contrast reading mid-fade
 - [ ] Certification descriptions need a field in the resume model (model change: proposed, not done)
 
+## Hosting on Render (DONE, 2026-11-10) - https://resume-builder-g38k.onrender.com
+
+- [x] `render.yaml`: one free web service; engine serves the web app (D32)
+- [x] GitHub Actions on Linux: engine tests, web checks, Render build/start smoke test (run 42580060068: all green)
+- [x] Live on Render: Blueprint applied with GROQ_API_KEY; health OK, AI available
+- [x] Live check with the real resume in Chrome: 22/22 feature steps pass (import, preview, templates, exports,
+      analysis, Improve + AI, versions, tailoring + AI, cover letter + AI, applications, backup, privacy)
+
 ## Possible next steps (not started)
 
 - Grow the import corpus with real resumes (with permission) and add more templates
