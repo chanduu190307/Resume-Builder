@@ -18,7 +18,13 @@ jobs:
         with:
           python-version: "3.14"
       - run: python -m pip install -e ".[dev]"
-      - run: python -m pytest
+      - name: Tests
+        run: |
+          set -o pipefail
+          python -m pytest -rfE 2>&1 | tee pytest.log
+      - name: Report failing tests as annotations
+        if: failure()
+        run: grep -E "^(FAILED|ERROR) " pytest.log | head -20 | sed 's/^/::error::/' || true
       - name: Import accuracy
         run: python -m resume_engine.evals.import_report
 

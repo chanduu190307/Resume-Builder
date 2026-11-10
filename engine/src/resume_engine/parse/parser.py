@@ -793,7 +793,15 @@ class ResumeParser:
             texts = self._texts(pieces)
             name = texts[0].text if texts else ""
             issuer = texts[1].text if len(texts) > 1 else None
-            self._extra_pieces(texts, 2)
+            # Without a date, a description's first lines land in the header ("Name | Issuer",
+            # "Gained foundational knowledge of ...", "threats, and risk management."). A plain
+            # (not bold) sentence starts the description; following plain pieces continue it.
+            description_lines: list[str] = []
+            for p in texts[2:]:
+                if not p.bold and (description_lines or _words(p.text) >= 4):
+                    description_lines.append(p.text)
+                else:
+                    self._leftover(p.text)
             credential = None
             url = None
             for label, value in e.labels:
@@ -801,7 +809,6 @@ class ResumeParser:
                     credential = value
                 else:
                     self._leftover(f"{label}: {value}")
-            description_lines: list[str] = []
             for line in e.body:
                 urls = C.find_urls(line.text)
                 if urls and url is None and _words(line.text) <= 2:
