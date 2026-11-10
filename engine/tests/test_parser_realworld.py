@@ -49,6 +49,19 @@ LINES = [
     L("Example Learning Academy", size=11.0),
     L("Web Development Fundamentals", size=11.0, bold=True),
     L("Example Online School", size=11.0),
+    L("Cloud Basics | Example Cloud Academy", size=11.0, bold=True),
+    L("Learned core cloud concepts including storage, compute and", size=11.0),
+    L("basic security practices.", size=11.0),
+    H("Personal Details"),
+    L("Father’s Name : Ravi K", x0=38.0),
+    L("Mother’s Name: Lakshmi R", x0=38.0),
+    L("D.O.B : 15-08-2005", x0=38.0),
+    L("Address : #12 1st Main Road, Mysuru", x0=38.0),
+    H("Declaration"),
+    L("I hereby declare that the above details are true to the best of my knowledge.", x0=38.0),
+    L("Date :", bold=True, x0=38.0),
+    L("Place : Mysuru", "Signature", x0=38.0),
+    L("(PRIYA K)", x0=429.0),
 ]
 
 
@@ -96,7 +109,39 @@ def test_dateless_certifications_split_on_each_bold_title():
     assert [(c.name, c.issuer) for c in certs] == [
         ("Python Basics", "Example Learning Academy"),
         ("Web Development Fundamentals", "Example Online School"),
+        ("Cloud Basics", "Example Cloud Academy"),
     ]
+
+
+def test_certification_description_is_kept_as_one_paragraph():
+    certs = section(parse()[0], "certifications").items
+    assert certs[2].description == "Learned core cloud concepts including storage, compute and basic security practices."
+    assert certs[0].description is None
+
+
+def custom(resume, title):
+    return next(s for s in resume.sections if s.type == "custom" and s.title == title)
+
+
+def test_personal_details_lines_are_kept_whole():
+    """"D.O.B : 15-08-2005" used to lose its year to a date field and leave "D.O.B : 15-08" unplaced."""
+    [item] = custom(parse()[0], "Personal Details").items
+    assert [b.text for b in item.bullets] == [
+        "Father’s Name : Ravi K",
+        "Mother’s Name: Lakshmi R",
+        "D.O.B : 15-08-2005",
+        "Address: #12 1st Main Road, Mysuru",
+    ]
+    assert item.date_text is None and item.title == ""
+
+
+def test_declaration_keeps_place_and_signature_on_one_line():
+    """"Signature" on the right used to become a location, leaving "Place : ..." unplaced."""
+    items = custom(parse()[0], "Declaration").items
+    assert items[0].title == "I hereby declare that the above details are true to the best of my knowledge."
+    assert items[0].location is None
+    assert [b.text for b in items[0].bullets] == ["Date :", "Place : Mysuru Signature"]
+    assert items[1].title == "(PRIYA K)"
 
 
 def test_nothing_is_left_unplaced():

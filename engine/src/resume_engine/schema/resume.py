@@ -166,6 +166,7 @@ class CertificationItem(_Model):
     expires: PartialDate | None = None
     credential_id: str | None = Field(default=None, max_length=SHORT)
     url: str | None = Field(default=None, max_length=MEDIUM)
+    description: str | None = Field(default=None, max_length=LONG)
 
 
 class PublicationItem(_Model):

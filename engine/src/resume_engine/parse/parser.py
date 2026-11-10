@@ -142,6 +142,9 @@ def split_top_level(text: str, seps: str = ",;•|·") -> list[str]:
     return [i.strip() for i in items if i.strip()]
 
 
+# "Father’s Name : X", "D.O.B : 28-04-2006", "Date :" in custom sections (value may be empty).
+_KEY_VALUE_RE = re.compile(r"^\s*[^\W\d_][\w .’'/&+()-]{0,30}?\s*:(\s|$)")
+
 _EMPTY_LABEL_RE = re.compile(
     r"^\s*(description|project description|details|responsibilities|key responsibilities|achievements|"
     r"key achievements|highlights|key highlights|features|key features|contributions|overview|summary|tasks)\s*:\s*$",
@@ -798,18 +801,24 @@ class ResumeParser:
                     credential = value
                 else:
                     self._leftover(f"{label}: {value}")
+            description_lines: list[str] = []
             for line in e.body:
                 urls = C.find_urls(line.text)
-                if urls and url is None:
+                if urls and url is None and _words(line.text) <= 2:
                     url = urls[0]
                 else:
-                    self._leftover(line.text)
-            for b in e.bullets:
-                self._leftover(b)
+                    description_lines.append(line.text)  # "Gained foundational knowledge of ..."
+            description_lines += e.bullets
+            description = join_wrapped(description_lines) if description_lines else None
             if not name:
+                if description:
+                    self._leftover(description)
                 continue
             items.append(
-                CertificationItem(name=name, issuer=issuer, issued=issued, expires=expires, credential_id=credential, url=url)
+                CertificationItem(
+                    name=name, issuer=issuer, issued=issued, expires=expires, credential_id=credential, url=url,
+                    description=description,
+                )
             )
         return CertificationsSection(title=raw.title, items=items)
 
@@ -866,6 +875,14 @@ class ResumeParser:
     def _custom(self, raw: _RawSection, entries: list[_Entry]) -> CustomSection:
         items = []
         for e in entries:
+            # "Label : value" lines (personal details, declarations) are kept whole, one per line.
+            # Treating them as title/date/location chopped "D.O.B : 28-04-2006" into a year and
+            # took a right-aligned "Signature" for a location, leaving "Place : ..." unplaced.
+            key_values = [l for l in e.header if _KEY_VALUE_RE.match(l.text) and "://" not in l.text]
+            if key_values:
+                e.header = [l for l in e.header if not any(l is k for k in key_values)]
+                e.date_idx = None
+            kept_lines = [" ".join(s.text.strip() for s in l.segments if s.text.strip()) for l in key_values]
             pieces = self._pieces(e)
             date = self._take_date(e, pieces, "custom")
             location = self._take_location(pieces)
@@ -874,7 +891,7 @@ class ResumeParser:
             subtitle = texts[1].text if len(texts) > 1 else None
             self._extra_pieces(texts, 2)
             _, other = self._labels_to_bullets(e, set())
-            bullets = e.bullets + self._body_bullets(e) + other
+            bullets = kept_lines + e.bullets + self._body_bullets(e) + other
             if not title and not bullets:
                 continue
             items.append(

@@ -208,3 +208,14 @@ stay 404s; client-side routes get `index.html`; hashed assets are cached for a y
 JavaScript (the pdf.js worker). `GROQ_API_KEY` is a `sync: false` secret entered in Render, never committed.
 Because Windows Smart App Control blocks the engine on the developer PC, GitHub Actions runs the test suites
 and the exact Render build/start with HTTP smoke checks on Linux.
+
+## D33 - Certification descriptions; custom sections keep "Label : value" lines whole
+Found on the live site with a real resume (9 lines left in "Imported text to review").
+- `CertificationItem.description` (optional, like awards and publications). The parser puts a certification's
+  plain body lines there (wrapped lines joined); a body line that is only a link is still the URL. The AI
+  import maps `description` too, and like every AI value it is kept only if it appears in the document.
+- Custom sections (Personal Details, Declaration...): header lines of the form "Label : value" (value may be
+  empty) become one bullet each, verbatim. Before, "D.O.B : 28-04-2006" lost "2006" to a date field and a
+  right-aligned "Signature" was taken as a location, leaving parts of both lines unplaced.
+- The JSON Schema was edited to match the generator byte-for-byte (the generator could not run on the Windows
+  PC, which blocks pydantic); the drift checks in CI confirm it.

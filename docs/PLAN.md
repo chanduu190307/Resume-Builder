@@ -184,6 +184,15 @@ delight. The editor stays still while typing. Easy to use comes first; effects n
 - [x] Live check with the real resume in Chrome: 22/22 feature steps pass (import, preview, templates, exports,
       analysis, Improve + AI, versions, tailoring + AI, cover letter + AI, applications, backup, privacy)
 
+## Import fixes from the live check (2026-11-10)
+
+- [x] Certifications have an optional description (model, JSON Schema, types, editor, PDF/DOCX, AI import,
+      accuracy harness); the parser joins a description's wrapped lines into it instead of leaving them unplaced
+- [x] Custom sections keep "Label : value" lines whole ("D.O.B : 28-04-2006" is no longer split into a year;
+      "Place : Bengaluru   Signature" is no longer split into a fake location)
+- [x] Regression tests with fictional data (parser, AI import, document model)
+- [ ] CI green on Linux, deployed, re-checked on the live site with the real resume
+
 ## Possible next steps (not started)
 
 - Grow the import corpus with real resumes (with permission) and add more templates

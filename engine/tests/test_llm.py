@@ -187,3 +187,19 @@ University of Leeds, BSc Mathematics, graduated 2020"""
     assert result.resume.contact.full_name == "Sam Rivera"
     assert not any(w.startswith("No name was found.") for w in result.report.warnings)
     assert "No phone number was found." in result.report.warnings  # still true, so still reported
+
+
+def test_ai_certification_description_is_kept_only_if_in_the_document():
+    source = "Jane Doe\njane@example.com\nCertifications\nCloud Basics | Example Academy\nLearned core cloud concepts."
+    out = {
+        "contact": {"full_name": "Jane Doe", "headline": None, "email": "jane@example.com", "phone": None, "location": None, "links": []},
+        "sections": [{"type": "certifications", "heading": "Certifications", "text": None, "entries": [
+            entry(title="Cloud Basics", issuer="Example Academy", description="Learned core cloud concepts."),
+            entry(title="Cloud Basics", issuer="Example Academy", description="Certified cloud architect with 10 years."),
+        ]}],
+    }
+    resume, discarded = to_resume(out, source)
+    first, second = resume.sections[0].items
+    assert first.description == "Learned core cloud concepts."
+    assert second.description is None  # invented text is never kept
+    assert "Certified cloud architect with 10 years." in discarded

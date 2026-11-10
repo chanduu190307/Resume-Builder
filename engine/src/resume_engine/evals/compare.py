@@ -172,7 +172,7 @@ _TEXT_FIELDS: dict[str, tuple[str, ...]] = {
     "experience": ("title", "organization", "location", "employment_type"),
     "education": ("institution", "degree", "field_of_study", "location", "grade"),
     "projects": ("name", "role", "organization"),
-    "certifications": ("name", "issuer", "credential_id"),
+    "certifications": ("name", "issuer", "credential_id", "description"),
     "publications": ("title", "publisher", "authors", "description"),
     "languages": ("language", "proficiency"),
     "awards": ("title", "issuer", "description"),

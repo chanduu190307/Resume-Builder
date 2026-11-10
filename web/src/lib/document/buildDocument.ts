@@ -167,7 +167,7 @@ const BUILDERS: { [K in Section["type"]]: (item: ItemOf<K>) => DocEntry[] } = {
       title: clean(it.name),
       titleRight: certificationDates(it.issued, it.expires),
       subtitle: clean(it.issuer),
-      lines: [...textLine(it.credential_id, "Credential ID"), ...urlLine(it.url)],
+      lines: [...textLine(it.description), ...textLine(it.credential_id, "Credential ID"), ...urlLine(it.url)],
       bullets: [],
     }),
   ],

@@ -48,3 +48,23 @@ describe("buildDocument", () => {
     expect(words).toEqual(["Only Name"]);
   });
 });
+
+describe("certifications", () => {
+  it("shows the description under the issuer, before the credential ID", () => {
+    const resume = createResume("Test");
+    resume.sections = [
+      {
+        id: "s1", type: "certifications", title: "Certifications", visible: true,
+        items: [{
+          id: "c1", name: "Cloud Basics", issuer: "Example Cloud Academy", issued: null, expires: null,
+          credential_id: "ABC-123", url: null, description: "Learned core cloud concepts and basic security practices.",
+        }],
+      },
+    ] as typeof resume.sections;
+    const text = documentText(buildDocument(resume)).join("\n");
+    expect(text).toContain("Cloud Basics");
+    const order = ["Example Cloud Academy", "Learned core cloud concepts and basic security practices.", "ABC-123"].map((t) => text.indexOf(t));
+    expect(order.every((i) => i >= 0)).toBe(true);
+    expect([...order].sort((a, b) => a - b)).toEqual(order);
+  });
+});

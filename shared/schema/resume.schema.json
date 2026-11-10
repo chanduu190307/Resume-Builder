@@ -155,6 +155,19 @@
           "default": null,
           "title": "Credential Id"
         },
+        "description": {
+          "anyOf": [
+            {
+              "maxLength": 5000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
         "expires": {
           "anyOf": [
             {
@@ -223,7 +236,8 @@
         "issued",
         "expires",
         "credential_id",
-        "url"
+        "url",
+        "description"
       ],
       "title": "CertificationItem",
       "type": "object"

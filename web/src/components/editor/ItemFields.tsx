@@ -217,6 +217,9 @@ export function ItemFields({ type, sectionId, item }: ItemFieldsProps) {
           <Field label="Verification link (optional)" className="sm:col-span-2">
             {(id) => <TextInput id={id} type="url" value={it.url} onValueChange={(v) => set("url", nullIfBlank(v))} />}
           </Field>
+          <Field label="Description (optional)" hint="What you learned or can now do, in one or two sentences." className="sm:col-span-2">
+            {(id) => <TextArea id={id} value={it.description} onValueChange={(v) => set("description", nullIfBlank(v))} />}
+          </Field>
         </div>
       );
     }

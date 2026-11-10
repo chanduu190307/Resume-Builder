@@ -200,6 +200,7 @@ export interface CertificationsSection {
 }
 export interface CertificationItem {
   credential_id: string | null;
+  description: string | null;
   expires: PartialDate | null;
   id: string;
   issued: PartialDate | null;

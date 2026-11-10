@@ -42,7 +42,7 @@ export function createItem<T extends SectionType>(type: T): ItemOf<T> {
     }),
     skills: () => ({ id, name: null, kind: "technical", skills: [] }),
     certifications: () => ({
-      id, name: "", issuer: null, issued: null, expires: null, credential_id: null, url: null,
+      id, name: "", issuer: null, issued: null, expires: null, credential_id: null, url: null, description: null,
     }),
     publications: () => ({
       id, title: "", publisher: null, authors: null, date: null, url: null, description: null,
