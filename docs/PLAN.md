@@ -191,7 +191,7 @@ delight. The editor stays still while typing. Easy to use comes first; effects n
 - [x] Custom sections keep "Label : value" lines whole ("D.O.B : 28-04-2006" is no longer split into a year;
       "Place : Bengaluru   Signature" is no longer split into a fake location)
 - [x] Regression tests with fictional data (parser, AI import, document model)
-- [ ] CI green on Linux, deployed, re-checked on the live site with the real resume
+- [x] CI green on Linux; deployed; live re-check with the real resume: 0 unplaced lines (was 9), 22/22 feature steps pass
 
 ## Possible next steps (not started)
 
